@@ -357,7 +357,7 @@
 
         .sticker-card {
             background: #1e293b;
-            border: 1px solid #475569;
+            border: 1.5px solid #475569;
             border-radius: 8px;
             padding: 6px 8px;
             display: flex;
@@ -427,7 +427,7 @@
             font-family: 'Montserrat', sans-serif;
         }
 
-        /* অ্যাকশন সিলেকশন গ্রিড */
+        /* অ্যাকশন সিলেকশন গ্রিড (SMALL / BIG) */
         .options-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -699,14 +699,14 @@
                     </div>
                 </div>
 
-                <!-- অ্যাকশন সিলেকশন (SMALL / BIG ট্রেড) -->
+                <!-- অ্যাকশন সিলেকশন (SMALL / BIG) -->
                 <div class="control-group">
                     <div class="control-label">
                         <span>⚡ ACTION (SMALL / BIG):</span>
                     </div>
                     <div class="options-grid">
-                        <button type="button" id="btn-small" class="opt-btn active-small" onclick="setAction('SMALL TRADE')">SMALL TRADE</button>
-                        <button type="button" id="btn-big" class="opt-btn" onclick="setAction('BIG TRADE')">BIG TRADE</button>
+                        <button type="button" id="btn-small" class="opt-btn active-small" onclick="setAction('SMALL')">SMALL</button>
+                        <button type="button" id="btn-big" class="opt-btn" onclick="setAction('BIG')">BIG</button>
                     </div>
                 </div>
 
@@ -788,7 +788,7 @@
             }
         });
 
-        let currentAction = 'SMALL TRADE';
+        let currentAction = 'SMALL';
         let currentMarket = '30S';
         let currentColor = 'GREEN';
         let currentColorEmoji = '🟢';
@@ -796,7 +796,7 @@
         const chatId = "-1004478174913"; // তোর প্রাইভেট চ্যানেল আইডি
         const botToken = "9043785152:AAG37P5ZVgjVUw7l80RiJl2tUzl4MQokP1o";
 
-        // লাইভ পিরিয়ড ও কাউন্টডাউন টাইমার ইঞ্জিন (ইংলিশ ডিজিট নিশ্চিত করা)
+        // নিখুঁত লাইভ পিরিয়ড ও কাউন্টডাউন টাইমার ইঞ্জিন (ইংলিশ ডিজিট নিশ্চিত করা)
         function startLiveTimer() {
             setInterval(() => {
                 const now = new Date();
@@ -872,7 +872,7 @@
             }
         });
 
-        // পপআপ উইন্ডো ড্র্যাগিং লজিক (কার্ডের যেকোনো ফাঁকা জায়গা থেকে ড্র্যাগ করা যাবে)
+        // পপআপ উইন্ডো ড্র্যাগিং লজিক
         const popupCard = document.getElementById('popup-card');
         let isPopupDragging = false;
         let pStartX, pStartY, pInitialX, pInitialY;
@@ -920,7 +920,7 @@
             const btnSmall = document.getElementById('btn-small');
             const btnBig = document.getElementById('btn-big');
 
-            if (action === 'SMALL TRADE') {
+            if (action === 'SMALL') {
                 btnSmall.className = 'opt-btn active-small';
                 btnBig.className = 'opt-btn';
             } else {
@@ -962,14 +962,14 @@
             const referralLink = "https://hgnice0.com/#/register?invitationCode=376851951983";
             const wingoTime = currentMarket === '30S' ? '𝟯𝟬𝗦' : '𝟲𝟬𝗦';
 
-            return `👑 SIDDIK VIP SIGNAL 👑\n▱▱▱▱▱▱▱▱▱▱▱▱▱▱\n💎 𝐏𝐄𝐑𝐈𝐎𝐃 ➤ 📅 ${period}\n🎯 𝐀𝐂𝐓𝐈𝐎𝐍 ➤ ${currentAction}\n🎨 𝐂𝐎𝐋𝐎𝐑 ➤ ${currentColorEmoji} ${currentColor}\n🔢 𝐍𝐔𝐌𝐁𝐄𝐑 ➤ 💠 [ ${currentNumber} ]\n⚡ 𝐖𝐈𝐍𝐆𝐎 ➤ ${wingoTime} ⏱️\n▱▱▱▱▱▱▱▱▱▱▱▱▱▱\n🔗 [𝗗𝗜𝗥𝗘𝗖𝗧 𝗪𝗘𝗕 𝗘𝗡𝗧𝗥𝗬](${referralLink})`;
+            return `👑 SIDDIK VIP SIGNAL 👑\n▱▱▱▱▱▱▱▱▱▱▱▱▱▱\n💎 𝐏𝐄𝐑𝐈𝐎𝐃 ➤ 📅 ${period}\n🎯 𝐀𝐂𝐓𝐈𝐎𝐍 ➤ BET ${currentAction}\n🎨 𝐂𝐎𝐋𝐎𝐑 ➤ ${currentColorEmoji} ${currentColor}\n🔢 𝐍𝐔𝐌𝐁𝐄𝐑 ➤ 💠 [ ${currentNumber} ]\n⚡ 𝐖𝐈𝐍𝐆𝐎 ➤ ${wingoTime} ⏱️\n▱▱▱▱▱▱▱▱▱▱▱▱▱▱\n🔗 [𝗗𝗜𝗥𝗘𝗖𝗧 𝗪𝗘𝗕 𝗘𝗡𝗧𝗥𝗬](${referralLink})`;
         }
 
         function updatePreview() {
             document.getElementById('signal-preview').innerText = getFormattedMessage();
         }
 
-        // ডাইরেক্ট ইমোজি ও লেখা একসাথে পাঠানোর ফাংশন
+        // ইমোজি ও লেখা একসাথে পাঠানোর ফাংশন
         function sendStickerEmoji(messageText) {
             const apiUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
 
