@@ -49,7 +49,7 @@
             flex-direction: column;
             align-items: center;
             gap: 16px;
-            box-shadow: 0 0 40px rgba(255, 215, 0, 0.25), inset 0 0 15px rgba(255, 215, 0, 0.1);
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.25);
             backdrop-filter: blur(10px);
         }
 
@@ -140,13 +140,13 @@
             z-index: 1;
         }
 
-        /* ফ্লোটিং লঞ্চার আইকন */
+        /* ফ্লোটিং লঞ্চার আইকন (এখন উপরে ডানপাশে থাকবে এবং ড্র্যাগ করা যাবে) */
         .floating-toggle-btn {
             position: fixed;
-            bottom: 30px;
+            top: 70px;
             right: 20px;
-            width: 62px;
-            height: 62px;
+            width: 58px;
+            height: 58px;
             border-radius: 50%;
             background: radial-gradient(circle, #1e1b4b 0%, #090d16 100%);
             border: 2.5px solid #ffd700;
@@ -167,43 +167,30 @@
             pointer-events: none;
         }
 
-        /* পপআপ ওভারলে */
-        .popup-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(3px);
-            z-index: 888888;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 10px;
-        }
-
-        /* মেইন প্রিমিয়াম পপআপ কার্ড */
+        /* পপআপ কন্টেইনার (কোনো ব্লকিং ওভারলে নাই, নিচে কাজ করা যাবে) */
         .popup-card {
-            position: absolute;
-            width: 380px;
-            max-width: 98vw;
-            height: 600px;
-            max-height: 96vh;
+            position: fixed;
+            top: 80px;
+            left: 20px;
+            width: 360px;
+            max-width: 95vw;
+            height: 560px;
+            max-height: 85vh;
             background: linear-gradient(160deg, #111827 0%, #0b0f19 100%);
             border: 2px solid #ff2a6d;
             border-radius: 22px;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.95), 0 0 35px rgba(255, 42, 109, 0.35);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.9), 0 0 35px rgba(255, 42, 109, 0.35);
             overflow: hidden;
-            display: flex;
+            display: none;
             flex-direction: column;
-            resize: both;
+            resize: both; /* ছোট-বড় করার অপশন */
+            z-index: 999988;
         }
 
         /* পপআপ হেডার (ড্র্যাগ হ্যান্ডেল) */
         .popup-header {
             background: linear-gradient(90deg, #1e1b4b, #0f172a);
-            padding: 12px 16px;
+            padding: 10px 14px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -221,8 +208,8 @@
         }
 
         .brand-avatar {
-            width: 38px;
-            height: 38px;
+            width: 35px;
+            height: 35px;
             border-radius: 50%;
             border: 2px solid #ffd700;
             overflow: hidden;
@@ -235,15 +222,15 @@
         }
 
         .brand-text h3 {
-            font-size: 13px;
+            font-size: 12.5px;
             font-weight: 900;
             color: #ffd700;
-            letter-spacing: 0.8px;
+            letter-spacing: 0.5px;
             font-family: 'Orbitron', sans-serif;
         }
 
         .brand-text span {
-            font-size: 10px;
+            font-size: 9.5px;
             color: #38bdf8;
             font-weight: 700;
         }
@@ -252,24 +239,23 @@
             background: rgba(239, 68, 68, 0.15);
             border: 1px solid rgba(239, 68, 68, 0.4);
             color: #f87171;
-            width: 30px;
-            height: 30px;
-            border-radius: 8px;
-            font-size: 16px;
+            width: 28px;
+            height: 28px;
+            border-radius: 7px;
+            font-size: 15px;
             font-weight: 800;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            pointer-events: auto;
         }
 
         /* পপআপ বডি */
         .popup-body {
-            padding: 14px;
+            padding: 12px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
             flex-grow: 1;
@@ -278,11 +264,11 @@
         .control-group {
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 5px;
         }
 
         .control-label {
-            font-size: 11.5px;
+            font-size: 11px;
             font-weight: 800;
             color: #fbbf24;
             display: flex;
@@ -301,10 +287,10 @@
         .market-btn {
             background: #0f172a;
             border: 1.5px solid #334155;
-            border-radius: 10px;
-            padding: 8px;
+            border-radius: 9px;
+            padding: 7px;
             color: #94a3b8;
-            font-size: 12px;
+            font-size: 11.5px;
             font-weight: 800;
             cursor: pointer;
             text-align: center;
@@ -315,22 +301,22 @@
             background: linear-gradient(135deg, #7c3aed, #4c1d95);
             border-color: #ffd700;
             color: #ffffff;
-            box-shadow: 0 0 12px rgba(124, 58, 237, 0.5);
+            box-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
         }
 
         /* স্টিকার প্যানেল */
         .sticker-panel-box {
             background: #0a0f1d;
             border: 1px solid rgba(255, 215, 0, 0.3);
-            border-radius: 12px;
-            padding: 10px;
+            border-radius: 10px;
+            padding: 8px;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 6px;
         }
 
         .sticker-title {
-            font-size: 11px;
+            font-size: 10.5px;
             color: #ffd700;
             font-weight: 800;
         }
@@ -338,20 +324,19 @@
         .sticker-btns-row {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
+            gap: 6px;
         }
 
         .sticker-card {
             background: #1e293b;
-            border: 1px solid #334155;
-            border-radius: 9px;
-            padding: 7px;
+            border: 1.5px solid #334155;
+            border-radius: 8px;
+            padding: 6px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 3px;
+            gap: 2px;
             cursor: pointer;
-            transition: background 0.2s;
         }
 
         .sticker-card:active {
@@ -359,11 +344,11 @@
         }
 
         .s-emoji {
-            font-size: 18px;
+            font-size: 16px;
         }
 
         .s-name {
-            font-size: 10px;
+            font-size: 9.5px;
             color: #38bdf8;
             font-weight: 700;
         }
@@ -378,10 +363,10 @@
             flex: 1;
             background: #020617;
             border: 1.5px solid #334155;
-            border-radius: 10px;
-            padding: 9px 12px;
+            border-radius: 9px;
+            padding: 8px 10px;
             color: #ffffff;
-            font-size: 13.5px;
+            font-size: 13px;
             font-weight: 800;
             outline: none;
             user-select: text;
@@ -396,13 +381,13 @@
         .timer-badge {
             background: #0f172a;
             border: 1.5px solid #334155;
-            border-radius: 10px;
-            padding: 0 14px;
+            border-radius: 9px;
+            padding: 0 12px;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
             color: #38bdf8;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 900;
             font-family: 'Orbitron', sans-serif !important;
         }
@@ -417,10 +402,10 @@
         .opt-btn {
             background: #0f172a;
             border: 1.5px solid #334155;
-            border-radius: 10px;
-            padding: 10px;
+            border-radius: 9px;
+            padding: 8px;
             color: #94a3b8;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 900;
             cursor: pointer;
             text-align: center;
@@ -431,14 +416,14 @@
             background: #059669;
             border-color: #34d399;
             color: #ffffff;
-            box-shadow: 0 0 12px rgba(5, 150, 105, 0.4);
+            box-shadow: 0 0 10px rgba(5, 150, 105, 0.4);
         }
 
         .opt-btn.active-big {
             background: #dc2626;
             border-color: #f87171;
             color: #ffffff;
-            box-shadow: 0 0 12px rgba(220, 38, 38, 0.4);
+            box-shadow: 0 0 10px rgba(220, 38, 38, 0.4);
         }
 
         /* কালার সিলেকশন */
@@ -451,10 +436,10 @@
         .color-btn {
             background: #0f172a;
             border: 1.5px solid #334155;
-            border-radius: 9px;
-            padding: 8px;
+            border-radius: 8px;
+            padding: 7px;
             color: #94a3b8;
-            font-size: 11px;
+            font-size: 10.5px;
             font-weight: 800;
             cursor: pointer;
             text-align: center;
@@ -464,42 +449,42 @@
             background: #10b981;
             border-color: #34d399;
             color: #fff;
-            box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+            box-shadow: 0 0 8px rgba(16, 185, 129, 0.4);
         }
 
         .color-btn.active-red {
             background: #ef4444;
             border-color: #f87171;
             color: #fff;
-            box-shadow: 0 0 10px rgba(239, 68, 68, 0.4);
+            box-shadow: 0 0 8px rgba(239, 68, 68, 0.4);
         }
 
         .color-btn.active-violet {
             background: #8b5cf6;
             border-color: #a78bfa;
             color: #fff;
-            box-shadow: 0 0 10px rgba(139, 92, 246, 0.4);
+            box-shadow: 0 0 8px rgba(139, 92, 246, 0.4);
         }
 
         /* নাম্বার সিলেকশন গ্রিড (0 - 9) */
         .number-grid {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
-            gap: 6px;
+            gap: 5px;
         }
 
         .num-btn {
             border: 1.5px solid #334155;
-            border-radius: 9px;
-            padding: 8px 4px;
-            font-size: 13px;
+            border-radius: 8px;
+            padding: 6px 3px;
+            font-size: 12px;
             font-weight: 900;
             cursor: pointer;
             text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 2px;
+            gap: 1px;
             font-family: 'Orbitron', sans-serif;
         }
 
@@ -509,13 +494,13 @@
         .num-green-violet { background: linear-gradient(135deg, #10b981, #8b5cf6); color: #fff; border-color: #a78bfa; }
 
         .num-btn.active-num {
-            border: 2.5px solid #ffd700 !important;
-            transform: scale(1.08);
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+            border: 2px solid #ffd700 !important;
+            transform: scale(1.06);
+            box-shadow: 0 0 12px rgba(255, 215, 0, 0.6);
         }
 
         .num-sub {
-            font-size: 8px;
+            font-size: 7.5px;
             font-weight: 700;
             opacity: 0.9;
             font-family: 'Hind Siliguri', sans-serif;
@@ -525,12 +510,12 @@
         .preview-box {
             background: #020617;
             border: 1.5px dashed rgba(255, 215, 0, 0.4);
-            border-radius: 12px;
-            padding: 10px;
+            border-radius: 10px;
+            padding: 8px;
             font-family: 'Courier New', Courier, monospace;
-            font-size: 11px;
+            font-size: 10.5px;
             color: #e2e8f0;
-            line-height: 1.45;
+            line-height: 1.4;
             white-space: pre-wrap;
             word-break: break-all;
             user-select: text;
@@ -540,34 +525,34 @@
         /* সেন্ড বাটন */
         .send-btn {
             width: 100%;
-            padding: 13px;
+            padding: 11px;
             border: none;
-            border-radius: 12px;
+            border-radius: 10px;
             background: linear-gradient(135deg, #ff1e56 0%, #ff7b00 100%);
             color: #ffffff;
-            font-size: 14px;
+            font-size: 13.5px;
             font-weight: 900;
             cursor: pointer;
             letter-spacing: 0.8px;
-            box-shadow: 0 5px 20px rgba(255, 30, 86, 0.45);
+            box-shadow: 0 4px 15px rgba(255, 30, 86, 0.45);
             flex-shrink: 0;
         }
 
         .status-alert {
             display: none;
             text-align: center;
-            font-size: 11.5px;
+            font-size: 11px;
             font-weight: 700;
-            padding: 8px;
-            border-radius: 8px;
+            padding: 7px;
+            border-radius: 7px;
             flex-shrink: 0;
         }
 
         .popup-footer {
             background: #050811;
-            padding: 8px;
+            padding: 7px;
             text-align: center;
-            font-size: 10px;
+            font-size: 9.5px;
             color: #64748b;
             font-weight: 700;
             border-top: 1px solid #1e293b;
@@ -598,137 +583,135 @@
     <!-- ব্যাকগ্রাউন্ড ফুল-স্ক্রিন রেফারেল Iframe -->
     <iframe class="bg-iframe" src="https://hgnice0.com/#/register?invitationCode=376851951983"></iframe>
 
-    <!-- ড্র্যাগ ও ক্লিক করার উপযোগী ফ্লোটিং আইকন -->
+    <!-- ড্র্যাগ ও ক্লিক করার উপযোগী ফ্লোটিং আইকন (উপরে ডানপাশে) -->
     <div class="floating-toggle-btn" id="floating-btn">
         <img src="https://cdn.imageurlgenerator.com/uploads/c1a51603-836b-4307-abe9-140f47b94444.jpg" alt="Open Panel">
     </div>
 
-    <!-- মেইন পপআপ ওভারলে -->
-    <div class="popup-overlay" id="popup-overlay" onclick="maybeClosePopup(event)">
-        <div class="popup-card" id="popup-card">
+    <!-- মেইন পপআপ কার্ড (কোনো ব্লকিং ওভারলে নাই, নিচে কাজ করা যাবে এবং ছোট-বড় করা যাবে) -->
+    <div class="popup-card" id="popup-card">
+        
+        <!-- হেডার (ড্র্যাগ হ্যান্ডেল) -->
+        <div class="popup-header" id="popup-header">
+            <div class="brand-info">
+                <div class="brand-avatar">
+                    <img src="https://cdn.imageurlgenerator.com/uploads/c1a51603-836b-4307-abe9-140f47b94444.jpg" alt="Logo">
+                </div>
+                <div class="brand-text">
+                    <h3>👑 SIDDIK VIP SYSTEM 👑</h3>
+                    <span>Live WinGo Bot Engine</span>
+                </div>
+            </div>
+            <button class="minimize-btn" onclick="togglePopup(false)">✕</button>
+        </div>
+
+        <!-- বডি -->
+        <div class="popup-body">
             
-            <!-- হেডার (ড্র্যাগ হ্যান্ডেল) -->
-            <div class="popup-header" id="popup-header">
-                <div class="brand-info">
-                    <div class="brand-avatar">
-                        <img src="https://cdn.imageurlgenerator.com/uploads/c1a51603-836b-4307-abe9-140f47b94444.jpg" alt="Logo">
-                    </div>
-                    <div class="brand-text">
-                        <h3>👑 SIDDIK VIP SYSTEM 👑</h3>
-                        <span>Live WinGo Bot Engine</span>
-                    </div>
+            <!-- মার্কেট সিলেকশন (30S / 1M) -->
+            <div class="control-group">
+                <div class="control-label">
+                    <span>📊 MARKET SELECT:</span>
                 </div>
-                <button class="minimize-btn" onclick="togglePopup(false)">✕</button>
+                <div class="market-grid">
+                    <button type="button" id="market-30s" class="market-btn active-market" onclick="setMarket('30S')">WinGo 30S</button>
+                    <button type="button" id="market-1m" class="market-btn" onclick="setMarket('1M')">WinGo 1M</button>
+                </div>
             </div>
 
-            <!-- বডি -->
-            <div class="popup-body">
-                
-                <!-- মার্কেট সিলেকশন (30S / 1M) -->
-                <div class="control-group">
-                    <div class="control-label">
-                        <span>📊 MARKET SELECT:</span>
+            <!-- স্টিকার ও ইমোজি প্যানেল -->
+            <div class="sticker-panel-box">
+                <div class="sticker-title">
+                    <span>✨ Direct Message Stacker</span>
+                </div>
+                <div class="sticker-btns-row">
+                    <div class="sticker-card" onclick="sendStickerEmoji('💎 Win')">
+                        <span class="s-emoji">💎</span>
+                        <span class="s-name">Win</span>
                     </div>
-                    <div class="market-grid">
-                        <button type="button" id="market-30s" class="market-btn active-market" onclick="setMarket('30S')">WinGo 30S</button>
-                        <button type="button" id="market-1m" class="market-btn" onclick="setMarket('1M')">WinGo 1M</button>
+                    <div class="sticker-card" onclick="sendStickerEmoji('🔥 Boom Shot')">
+                        <span class="s-emoji">🔥</span>
+                        <span class="s-name">Boom Shot</span>
+                    </div>
+                    <div class="sticker-card" onclick="sendStickerEmoji('❌ Loss')">
+                        <span class="s-emoji">❌</span>
+                        <span class="s-name">Loss</span>
                     </div>
                 </div>
-
-                <!-- স্টিকার ও ইমোজি প্যানেল -->
-                <div class="sticker-panel-box">
-                    <div class="sticker-title">
-                        <span>✨ Direct Message Stacker</span>
-                    </div>
-                    <div class="sticker-btns-row">
-                        <div class="sticker-card" onclick="sendStickerEmoji('💎 Win')">
-                            <span class="s-emoji">💎</span>
-                            <span class="s-name">Win</span>
-                        </div>
-                        <div class="sticker-card" onclick="sendStickerEmoji('🔥 Boom Shot')">
-                            <span class="s-emoji">🔥</span>
-                            <span class="s-name">Boom Shot</span>
-                        </div>
-                        <div class="sticker-card" onclick="sendStickerEmoji('❌ Loss')">
-                            <span class="s-emoji">❌</span>
-                            <span class="s-name">Loss</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- পিরিয়ড ইনপুট ও লাইভ টাইমার (সঠিক গেম বেজড লাস্ট ৫ ডিজিট) -->
-                <div class="control-group">
-                    <div class="control-label">
-                        <span>🎯 PERIOD (Last 5 Digits):</span>
-                    </div>
-                    <div class="period-row">
-                        <input type="text" id="period-input" class="input-box" value="02519" maxlength="5" oninput="updatePreview()">
-                        <div class="timer-badge">⏳ <span id="timer-display">30s</span></div>
-                    </div>
-                </div>
-
-                <!-- অ্যাকশন সিলেকশন (SMALL / BIG) -->
-                <div class="control-group">
-                    <div class="control-label">
-                        <span>⚡ ACTION (SMALL / BIG):</span>
-                    </div>
-                    <div class="options-grid">
-                        <button type="button" id="btn-small" class="opt-btn active-small" onclick="setAction('SMALL')">SMALL</button>
-                        <button type="button" id="btn-big" class="opt-btn" onclick="setAction('BIG')">BIG</button>
-                    </div>
-                </div>
-
-                <!-- কালার সিলেকশন -->
-                <div class="control-group">
-                    <div class="control-label">
-                        <span>🎨 COLOR SELECT:</span>
-                    </div>
-                    <div class="color-grid">
-                        <button type="button" id="color-green" class="color-btn active-green" onclick="setColor('GREEN', '🟢')">🟢 GREEN</button>
-                        <button type="button" id="color-red" class="color-btn" onclick="setColor('RED', '🔴')">🔴 RED</button>
-                        <button type="button" id="color-violet" class="color-btn" onclick="setColor('VIOLET', '🟣')">🟣 VIOLET</button>
-                    </div>
-                </div>
-
-                <!-- নাম্বার সিলেকশন (0 - 9) -->
-                <div class="control-group">
-                    <div class="control-label">
-                        <span>🔢 NUMBER SELECT (0-9):</span>
-                    </div>
-                    <div class="number-grid">
-                        <button type="button" id="num-0" class="num-btn num-red-violet" onclick="setNumber(0)">0<span class="num-sub">R/V</span></button>
-                        <button type="button" id="num-1" class="num-btn num-green active-num" onclick="setNumber(1)">1<span class="num-sub">Green</span></button>
-                        <button type="button" id="num-2" class="num-btn num-red" onclick="setNumber(2)">2<span class="num-sub">Red</span></button>
-                        <button type="button" id="num-3" class="num-btn num-green" onclick="setNumber(3)">3<span class="num-sub">Green</span></button>
-                        <button type="button" id="num-4" class="num-btn num-red" onclick="setNumber(4)">4<span class="num-sub">Red</span></button>
-                        <button type="button" id="num-5" class="num-btn num-green-violet" onclick="setNumber(5)">5<span class="num-sub">G/V</span></button>
-                        <button type="button" id="num-6" class="num-btn num-red" onclick="setNumber(6)">6<span class="num-sub">Red</span></button>
-                        <button type="button" id="num-7" class="num-btn num-green" onclick="setNumber(7)">7<span class="num-sub">Green</span></button>
-                        <button type="button" id="num-8" class="num-btn num-red" onclick="setNumber(8)">8<span class="num-sub">Red</span></button>
-                        <button type="button" id="num-9" class="num-btn num-green" onclick="setNumber(9)">9<span class="num-sub">Green</span></button>
-                    </div>
-                </div>
-
-                <!-- সিগন্যাল প্রিভিউ বক্স -->
-                <div class="control-group">
-                    <div class="control-label">
-                        <span>📋 চ্যানেলে সেন্ড হওয়ার প্রিভিউ:</span>
-                    </div>
-                    <div id="signal-preview" class="preview-box"></div>
-                </div>
-
             </div>
 
-            <!-- অটো সেন্ড বাটন ও স্ট্যাটাস ফুটার -->
-            <div style="padding: 12px 14px; background: #070a12; border-top: 1px solid rgba(255,42,109,0.3); display: flex; flex-direction: column; gap: 8px; flex-shrink: 0;">
-                <button class="send-btn" onclick="sendAutoSignal()">চ্যানেলে অটো সেন্ড করুন 🚀</button>
-                <div id="status-alert" class="status-alert"></div>
+            <!-- পিরিয়ড ইনপুট ও লাইভ টাইমার (সঠিক গেম বেজড লাস্ট ৫ ডিজিট) -->
+            <div class="control-group">
+                <div class="control-label">
+                    <span>🎯 PERIOD (Last 5 Digits):</span>
+                </div>
+                <div class="period-row">
+                    <input type="text" id="period-input" class="input-box" value="0609" maxlength="5" oninput="updatePreview()">
+                    <div class="timer-badge">⏳ <span id="timer-display">30s</span></div>
+                </div>
             </div>
 
-            <!-- ফুটার -->
-            <div class="popup-footer">
-                Powered by <span>SIDDIK VIP SIGNAL</span> | @Bdt5847
+            <!-- অ্যাকশন সিলেকশন (SMALL / BIG) -->
+            <div class="control-group">
+                <div class="control-label">
+                    <span>⚡ ACTION (SMALL / BIG):</span>
+                </div>
+                <div class="options-grid">
+                    <button type="button" id="btn-small" class="opt-btn active-small" onclick="setAction('SMALL')">SMALL</button>
+                    <button type="button" id="btn-big" class="opt-btn" onclick="setAction('BIG')">BIG</button>
+                </div>
             </div>
+
+            <!-- কালার সিলেকশন -->
+            <div class="control-group">
+                <div class="control-label">
+                    <span>🎨 COLOR SELECT:</span>
+                </div>
+                <div class="color-grid">
+                    <button type="button" id="color-green" class="color-btn active-green" onclick="setColor('GREEN', '🟢')">🟢 GREEN</button>
+                    <button type="button" id="color-red" class="color-btn" onclick="setColor('RED', '🔴')">🔴 RED</button>
+                    <button type="button" id="color-violet" class="color-btn" onclick="setColor('VIOLET', '🟣')">🟣 VIOLET</button>
+                </div>
+            </div>
+
+            <!-- নাম্বার সিলেকশন (0 - 9) -->
+            <div class="control-group">
+                <div class="control-label">
+                    <span>🔢 NUMBER SELECT (0-9):</span>
+                </div>
+                <div class="number-grid">
+                    <button type="button" id="num-0" class="num-btn num-red-violet" onclick="setNumber(0)">0<span class="num-sub">R/V</span></button>
+                    <button type="button" id="num-1" class="num-btn num-green active-num" onclick="setNumber(1)">1<span class="num-sub">Green</span></button>
+                    <button type="button" id="num-2" class="num-btn num-red" onclick="setNumber(2)">2<span class="num-sub">Red</span></button>
+                    <button type="button" id="num-3" class="num-btn num-green" onclick="setNumber(3)">3<span class="num-sub">Green</span></button>
+                    <button type="button" id="num-4" class="num-btn num-red" onclick="setNumber(4)">4<span class="num-sub">Red</span></button>
+                    <button type="button" id="num-5" class="num-btn num-green-violet" onclick="setNumber(5)">5<span class="num-sub">G/V</span></button>
+                    <button type="button" id="num-6" class="num-btn num-red" onclick="setNumber(6)">6<span class="num-sub">Red</span></button>
+                    <button type="button" id="num-7" class="num-btn num-green" onclick="setNumber(7)">7<span class="num-sub">Green</span></button>
+                    <button type="button" id="num-8" class="num-btn num-red" onclick="setNumber(8)">8<span class="num-sub">Red</span></button>
+                    <button type="button" id="num-9" class="num-btn num-green" onclick="setNumber(9)">9<span class="num-sub">Green</span></button>
+                </div>
+            </div>
+
+            <!-- সিগন্যাল প্রিভিউ বক্স -->
+            <div class="control-group">
+                <div class="control-label">
+                    <span>📋 চ্যানেলে সেন্ড হওয়ার প্রিভিউ:</span>
+                </div>
+                <div id="signal-preview" class="preview-box"></div>
+            </div>
+
+        </div>
+
+        <!-- অটো সেন্ড বাটন ও স্ট্যাটাস ফুটার -->
+        <div style="padding: 10px 14px; background: #070a12; border-top: 1px solid rgba(255,42,109,0.3); display: flex; flex-direction: column; gap: 6px; flex-shrink: 0;">
+            <button class="send-btn" onclick="sendAutoSignal()">চ্যানেলে অটো সেন্ড করুন 🚀</button>
+            <div id="status-alert" class="status-alert"></div>
+        </div>
+
+        <!-- ফুটার -->
+        <div class="popup-footer">
+            Powered by <span>SIDDIK VIP SIGNAL</span> | @Bdt5847
         </div>
     </div>
 
@@ -764,7 +747,7 @@
         const chatId = "-1004478174913";
         const botToken = "9043785152:AAG37P5ZVgjVUw7l80RiJl2tUzl4MQokP1o";
 
-        // গেমের সঠিক পিরিয়ড সিকোয়েন্সের সাথে মিল রেখে লাইভ পিরিয়ড ও কাউন্টডাউন টাইমার জেনারেটর
+        // স্ক্রিনশটের হুবহু মিল রেখে লাইভ পিরিয়ড ও কাউন্টডাউন টাইমার জেনারেটর (শেষ ৫ ডিজিট)
         function startLiveTimer() {
             setInterval(() => {
                 const now = new Date();
@@ -773,17 +756,14 @@
 
                 if (currentMarket === '30S') {
                     secondsLeft = 30 - (totalSeconds % 30);
-                    // WinGo 30S সার্ভার সিকোয়েন্স ফর্মুলা
                     const baseStep = Math.floor(now.getTime() / 30000);
-                    fullSeq = String(50000 + (baseStep % 100000));
+                    fullSeq = String(50600 + (baseStep % 100000));
                 } else {
                     secondsLeft = 60 - (totalSeconds % 60);
-                    // WinGo 1M সার্ভার সিকোয়েন্স ফর্মুলা
                     const baseStep = Math.floor(now.getTime() / 60000);
-                    fullSeq = String(30000 + (baseStep % 100000));
+                    fullSeq = String(30600 + (baseStep % 100000));
                 }
 
-                // পিরিয়ড নাম্বারের শুধুমাত্র শেষের ৫টি ডিজিট
                 const lastFiveDigits = fullSeq.slice(-5);
 
                 const periodInput = document.getElementById('period-input');
@@ -811,7 +791,7 @@
             updatePreview();
         }
 
-        // ফ্লোটিং আইকন পারফেক্ট ড্র্যাগ ও টাচ/ক্লিক হ্যান্ডলিং
+        // ফ্লোটিং আইকন পারফেক্ট ড্র্যাগ ও ক্লিক হ্যান্ডলিং
         const floatBtn = document.getElementById('floating-btn');
         let fStartX = 0, fStartY = 0, fInitialX = 0, fInitialY = 0;
         let fHasMoved = false;
@@ -866,7 +846,6 @@
             const dy = e.clientY - pStartY;
             popupCard.style.left = (pInitialX + dx) + 'px';
             popupCard.style.top = (pInitialY + dy) + 'px';
-            popupCard.style.transform = 'none';
         });
 
         popupHeader.addEventListener('pointerup', () => {
@@ -874,22 +853,10 @@
         });
 
         function togglePopup(show) {
-            const overlay = document.getElementById('popup-overlay');
             if (show) {
-                overlay.style.display = 'flex';
-                if (!popupCard.style.left || popupCard.style.left === '') {
-                    popupCard.style.left = '50%';
-                    popupCard.style.top = '50%';
-                    popupCard.style.transform = 'translate(-50%, -50%)';
-                }
+                popupCard.style.display = 'flex';
             } else {
-                overlay.style.display = 'none';
-            }
-        }
-
-        function maybeClosePopup(e) {
-            if (e.target.id === 'popup-overlay') {
-                togglePopup(false);
+                popupCard.style.display = 'none';
             }
         }
 
@@ -936,7 +903,7 @@
         }
 
         function getFormattedMessage() {
-            const period = document.getElementById('period-input').value || '02519';
+            const period = document.getElementById('period-input').value || '0609';
             const referralLink = "https://hgnice0.com/#/register?invitationCode=376851951983";
             const wingoTime = currentMarket === '30S' ? '𝟯𝟬𝗦' : '𝟲𝟬𝗦';
 
