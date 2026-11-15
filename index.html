@@ -193,21 +193,22 @@
             pointer-events: none;
         }
 
-        /* মেইন প্রিমিয়াম গোল্ডেন গ্লোয়িং কার্ড */
+        /* মেইন প্রিমিয়াম গোল্ডেন গ্লোয়িং কার্ড (এখন ছোট-বড় ও রিসাইজ করা যাবে) */
         .popup-card {
             position: absolute;
-            width: 100%;
-            max-width: 390px;
-            max-height: 94vh;
+            width: 360px;
+            max-width: 95vw;
+            height: 580px;
+            max-height: 92vh;
             background: linear-gradient(160deg, #121826 0%, #090d16 100%);
             border: 2px solid #ffd700;
             border-radius: 22px;
             box-shadow: 0 0 25px rgba(255, 215, 0, 0.35), inset 0 0 15px rgba(255, 215, 0, 0.1);
-            overflow-y: auto;
+            overflow: hidden; /* রিসাইজ স্মুথ রাখার জন্য */
             display: flex;
             flex-direction: column;
             pointer-events: auto;
-            touch-action: none;
+            resize: both; /* পপআপ উইন্ডো ছোট-বড় করার সুবিধা */
         }
 
         @keyframes popIn {
@@ -224,6 +225,7 @@
             justify-content: space-between;
             border-bottom: 1.5px solid rgba(255, 215, 0, 0.3);
             cursor: grab;
+            flex-shrink: 0;
         }
 
         .popup-header:active {
@@ -280,12 +282,14 @@
             justify-content: center;
         }
 
-        /* পপআপ বডি */
+        /* পপআপ বডি (스크롤যোগ্য) */
         .popup-body {
             padding: 12px 14px;
             display: flex;
             flex-direction: column;
             gap: 10px;
+            overflow-y: auto;
+            flex-grow: 1;
         }
 
         .control-group {
@@ -501,26 +505,43 @@
         .number-grid {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
-            gap: 5px;
+            gap: 6px;
         }
 
         .num-btn {
-            background: #1e293b;
             border: 1.5px solid #475569;
-            border-radius: 7px;
-            padding: 6px;
-            color: #cbd5e1;
-            font-size: 12px;
-            font-weight: 800;
+            border-radius: 8px;
+            padding: 8px 4px;
+            font-size: 13px;
+            font-weight: 900;
             cursor: pointer;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            transition: transform 0.15s ease;
         }
 
+        .num-btn:active {
+            transform: scale(0.92);
+        }
+
+        .num-red-violet { background: linear-gradient(135deg, #ef4444, #8b5cf6); color: #fff; border-color: #f43f5e; }
+        .num-green { background: #10b981; color: #fff; border-color: #34d399; }
+        .num-red { background: #ef4444; color: #fff; border-color: #f87171; }
+        .num-green-violet { background: linear-gradient(135deg, #10b981, #8b5cf6); color: #fff; border-color: #a78bfa; }
+
         .num-btn.active-num {
-            background: #f59e0b;
-            border-color: #ffd700;
-            color: #ffffff;
-            box-shadow: 0 0 8px rgba(245, 158, 11, 0.5);
+            border: 2.5px solid #ffd700 !important;
+            box-shadow: 0 0 12px #ffd700;
+            transform: scale(1.05);
+        }
+
+        .num-sub {
+            font-size: 8.5px;
+            font-weight: 700;
+            opacity: 0.9;
         }
 
         /* সিগন্যাল প্রিভিউ বক্স */
@@ -553,6 +574,7 @@
             box-shadow: 0 6px 18px rgba(245, 158, 11, 0.4);
             letter-spacing: 0.5px;
             transition: transform 0.15s ease;
+            flex-shrink: 0;
         }
 
         .send-btn:active {
@@ -566,6 +588,7 @@
             font-weight: 700;
             padding: 7px;
             border-radius: 7px;
+            flex-shrink: 0;
         }
 
         .popup-footer {
@@ -576,6 +599,7 @@
             color: #64748b;
             font-weight: 700;
             border-top: 1px solid #1e293b;
+            flex-shrink: 0;
         }
 
         .popup-footer span {
@@ -720,16 +744,16 @@
                         <span>🔢 NUMBER SELECT (0-9):</span>
                     </div>
                     <div class="number-grid">
-                        <button type="button" id="num-0" class="num-btn" onclick="setNumber(0)">0</button>
-                        <button type="button" id="num-1" class="num-btn active-num" onclick="setNumber(1)">1</button>
-                        <button type="button" id="num-2" class="num-btn" onclick="setNumber(2)">2</button>
-                        <button type="button" id="num-3" class="num-btn" onclick="setNumber(3)">3</button>
-                        <button type="button" id="num-4" class="num-btn" onclick="setNumber(4)">4</button>
-                        <button type="button" id="num-5" class="num-btn" onclick="setNumber(5)">5</button>
-                        <button type="button" id="num-6" class="num-btn" onclick="setNumber(6)">6</button>
-                        <button type="button" id="num-7" class="num-btn" onclick="setNumber(7)">7</button>
-                        <button type="button" id="num-8" class="num-btn" onclick="setNumber(8)">8</button>
-                        <button type="button" id="num-9" class="num-btn" onclick="setNumber(9)">9</button>
+                        <button type="button" id="num-0" class="num-btn num-red-violet" onclick="setNumber(0)">0<span class="num-sub">R/V</span></button>
+                        <button type="button" id="num-1" class="num-btn num-green active-num" onclick="setNumber(1)">1<span class="num-sub">Green</span></button>
+                        <button type="button" id="num-2" class="num-btn num-red" onclick="setNumber(2)">2<span class="num-sub">Red</span></button>
+                        <button type="button" id="num-3" class="num-btn num-green" onclick="setNumber(3)">3<span class="num-sub">Green</span></button>
+                        <button type="button" id="num-4" class="num-btn num-red" onclick="setNumber(4)">4<span class="num-sub">Red</span></button>
+                        <button type="button" id="num-5" class="num-btn num-green-violet" onclick="setNumber(5)">5<span class="num-sub">G/V</span></button>
+                        <button type="button" id="num-6" class="num-btn num-red" onclick="setNumber(6)">6<span class="num-sub">Red</span></button>
+                        <button type="button" id="num-7" class="num-btn num-green" onclick="setNumber(7)">7<span class="num-sub">Green</span></button>
+                        <button type="button" id="num-8" class="num-btn num-red" onclick="setNumber(8)">8<span class="num-sub">Red</span></button>
+                        <button type="button" id="num-9" class="num-btn num-green" onclick="setNumber(9)">9<span class="num-sub">Green</span></button>
                     </div>
                 </div>
 
@@ -741,10 +765,11 @@
                     <div id="signal-preview" class="preview-box"></div>
                 </div>
 
-                <!-- অটো সেন্ড বাটন -->
-                <button class="send-btn" onclick="sendAutoSignal()">চ্যানেলে অটো সেন্ড করুন 🚀</button>
+            </div>
 
-                <!-- স্ট্যাটাস মেসেজ -->
+            <!-- অটো সেন্ড বাটন ও স্ট্যাটাস (ফিক্সড ফুটার অংশ) -->
+            <div style="padding: 10px 14px; background: #0c121d; border-top: 1px solid rgba(255,215,0,0.2); display: flex; flex-direction: column; gap: 8px; flex-shrink: 0;">
+                <button class="send-btn" onclick="sendAutoSignal()">চ্যানেলে অটো সেন্ড করুন 🚀</button>
                 <div id="status-alert" class="status-alert"></div>
             </div>
 
@@ -756,7 +781,7 @@
     </div>
 
     <script>
-        const CORRECT_PASS = "SIDDIK786"; // তোর সিক্রেট পাসওয়ার্ড (প্রয়োজনে এখান থেকে পরিবর্তন করে নিতে পারবি)
+        const CORRECT_PASS = "SIDDIK786"; // সিক্রেট পাসওয়ার্ড
 
         function verifyPassword() {
             const inputVal = document.getElementById('pass-input').value;
@@ -773,7 +798,6 @@
             }
         }
 
-        // এন্টার প্রেস করলেও যেন আনলক হয়
         document.getElementById('pass-input').addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
                 verifyPassword();
@@ -941,9 +965,9 @@
         function setNumber(num) {
             currentNumber = num;
             for (let i = 0; i <= 9; i++) {
-                document.getElementById('num-' + i).className = 'num-btn';
+                document.getElementById('num-' + i).classList.remove('active-num');
             }
-            document.getElementById('num-' + num).className = 'num-btn active-num';
+            document.getElementById('num-' + num).classList.add('active-num');
             updatePreview();
         }
 
@@ -986,6 +1010,7 @@
             });
         }
 
+        // চ্যানেলে অটো সিগন্যাল সেন্ড করার বাটন ফাংশন
         function sendAutoSignal() {
             const message = getFormattedMessage();
             const apiUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
