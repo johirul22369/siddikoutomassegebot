@@ -145,7 +145,7 @@
             background: linear-gradient(135deg, #6d28d9, #ec4899);
             border: 2.5px solid #ffd700;
             box-shadow: 0 0 18px #ffd700;
-            z-index: 9998;
+            z-index: 99998;
             display: none;
             align-items: center;
             justify-content: center;
@@ -161,23 +161,23 @@
             pointer-events: none;
         }
 
-        /* পপআপ ওভারলে */
+        /* পপআপ ওভারলে (পয়েন্টার ইভেন্ট ফিক্সড) */
         .popup-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100vh;
-            background: transparent;
+            background: rgba(0, 0, 0, 0.4);
             z-index: 9999;
             display: none;
             align-items: center;
             justify-content: center;
             padding: 10px;
-            pointer-events: none;
+            pointer-events: auto;
         }
 
-        /* মেইন প্রিমিয়াম কার্ড (স্মুথ স্ক্রলিং ও ফাস্ট রেন্ডারিং) */
+        /* মেইন প্রিমিয়াম কার্ড */
         .popup-card {
             position: absolute;
             width: 360px;
@@ -187,11 +187,10 @@
             background: #121826;
             border: 2px solid #ffd700;
             border-radius: 22px;
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            pointer-events: auto;
             resize: both;
         }
 
@@ -253,7 +252,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            pointer-events: auto;
         }
 
         /* পপআপ বডি */
@@ -265,7 +263,6 @@
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
             flex-grow: 1;
-            cursor: default;
         }
 
         .control-group {
@@ -590,7 +587,7 @@
     </div>
 
     <!-- মেইন পপআপ ওভারলে -->
-    <div class="popup-overlay" id="popup-overlay">
+    <div class="popup-overlay" id="popup-overlay" onclick="maybeClosePopup(event)">
         <div class="popup-card" id="popup-card">
             
             <!-- হেডার -->
@@ -747,10 +744,10 @@
         let currentColor = 'GREEN';
         let currentColorEmoji = '🟢';
         let currentNumber = '1';
-        const chatId = "-1004478174913";[span_1](start_span)[span_1](end_span)
+        const chatId = "-1004478174913";[span_0](start_span)[span_0](end_span)
         const botToken = "9043785152:AAG37P5ZVgjVUw7l80RiJl2tUzl4MQokP1o";
 
-        // ব্যাকগ্রাউন্ড সাইটের আসল ফরম্যাট (`10005` সিরিজ) অনুযায়ী লাইভ পিরিয়ড ও কাউন্টডাউন টাইমার
+        // নিখুঁত লাইভ পিরিয়ড ও কাউন্টডাউন টাইমার
         function startLiveTimer() {
             setInterval(() => {
                 const now = new Date();
@@ -872,6 +869,12 @@
                 popupCard.style.transform = 'translate(-50%, -50%)';
             } else {
                 overlay.style.display = 'none';
+            }
+        }
+
+        function maybeClosePopup(e) {
+            if (e.target.id === 'popup-overlay') {
+                togglePopup(false);
             }
         }
 
