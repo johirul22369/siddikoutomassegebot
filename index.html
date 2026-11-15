@@ -640,13 +640,13 @@
                 </div>
             </div>
 
-            <!-- পিরিয়ড ইনপুট ও লাইভ টাইমার (UTC টাইম লজিক অনুযায়ী আপডেট করা) -->
+            <!-- পিরিয়ড ইনপুট ও লাইভ টাইমার (UTC টাইম লজিক অনুযায়ী জেনারেট হবে) -->
             <div class="control-group">
                 <div class="control-label">
                     <span>🎯 PERIOD (Last 5 Digits):</span>
                 </div>
                 <div class="period-row">
-                    <input type="text" id="period-input" class="input-box" value="50677" maxlength="5" oninput="updatePreview()">
+                    <input type="text" id="period-input" class="input-box" value="----" maxlength="5" oninput="updatePreview()">
                     <div class="timer-badge">⏳ <span id="timer-display">--s</span></div>
                 </div>
             </div>
@@ -726,8 +726,8 @@
                 document.getElementById('auth-overlay').style.display = 'none';
                 document.getElementById('floating-btn').style.display = 'flex';
                 updatePreview();
-                fetchLiveGameData();
-                setInterval(fetchLiveGameData, 1000); // প্রতি সেকেন্ডে লাইভ গেম ডেটা সিন্স হবে
+                updateTimerAndPeriod();
+                setInterval(updateTimerAndPeriod, 1000); // প্রতি সেকেন্ডে UTC লজিক অনুযায়ী পিরিয়ড ও টাইমার আপডেট হবে
             } else {
                 errorBox.style.display = 'block';
                 document.getElementById('pass-input').value = '';
@@ -748,62 +748,32 @@
         const chatId = "-1004478174913";
         const botToken = "9043785152:AAG37P5ZVgjVUw7l80RiJl2tUzl4MQokP1o";
 
-        // ব্যাকগ্রাউন্ড iframe অথবা UTC টাইম ক্যালকুলেশন থেকে নিখুঁত পিরিয়ড ও কাউন্টডাউন সিন্স করার ফাংশন
-        function fetchLiveGameData() {
-            let foundPeriod = false;
-            try {
-                const iframe = document.querySelector('.bg-iframe');
-                if (iframe && iframe.contentWindow) {
-                    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-                    if (iframeDoc) {
-                        const allElements = iframeDoc.querySelectorAll('*');
-                        for (let el of allElements) {
-                            let text = el.innerText ? el.innerText.trim() : '';
-                            if (/^\d{17}$/.test(text)) {
-                                const lastFive = text.slice(-5);
-                                const periodInput = document.getElementById('period-input');
-                                if (document.activeElement !== periodInput) {
-                                    periodInput.value = lastFive;
-                                    updatePreview();
-                                }
-                                foundPeriod = true;
-                                break;
-                            }
-                        }
-                    }
-                }
-            } catch (err) {
-                // ক্রস-অরিজিন পলিসির কারণে ফ্রেম রিড করা না গেলে UTC ফলব্যাক লজিক কাজ করবে
-            }
-
-            if (!foundPeriod) {
-                utcTimeCalculation();
-            }
-        }
-
-        function utcTimeCalculation() {
+        // নিখুঁত UTC টাইম লজিক যা 30S এবং 1M উভয় মার্কেটের পিরিয়ড ও কাউন্টডাউন হিসাব করবে
+        function updateTimerAndPeriod() {
             const now = new Date();
-            // সঠিক UTC টাইম অনুযায়ী সেকেন্ড হিসাব করা
-            const utcSeconds = Math.floor(now.getTime() / 1000);
-            let secondsLeft, periodSeq;
+            const totalDaySeconds = now.getUTCHours() * 3600 + now.getUTCMinutes() * 60 + now.getUTCSeconds();
+            
+            let remainingSecs, sequenceNumber, exactShortPeriod;
 
             if (currentMarket === '30S') {
-                secondsLeft = 30 - (utcSeconds % 30);
-                const total30s = Math.floor(now.getTime() / 30000);
-                periodSeq = String(50000 + (total30s % 100000));
+                const totalPeriods30s = Math.floor(totalDaySeconds / 30);
+                sequenceNumber = totalPeriods30s + 1;
+                exactShortPeriod = String(50000 + (sequenceNumber % 50000));
+                remainingSecs = 30 - (totalDaySeconds % 30);
             } else {
-                secondsLeft = 60 - (utcSeconds % 60);
-                const total60s = Math.floor(now.getTime() / 60000);
-                periodSeq = String(30000 + (total60s % 100000));
+                const totalPeriods1m = Math.floor(totalDaySeconds / 60);
+                sequenceNumber = totalPeriods1m + 1;
+                exactShortPeriod = String(30000 + (sequenceNumber % 50000));
+                remainingSecs = 60 - (totalDaySeconds % 60);
             }
 
-            const lastFiveDigits = periodSeq.slice(-5);
+            document.getElementById('timer-display').innerText = remainingSecs + 's';
+
             const periodInput = document.getElementById('period-input');
             if (document.activeElement !== periodInput) {
-                periodInput.value = lastFiveDigits;
+                periodInput.value = exactShortPeriod;
                 updatePreview();
             }
-            document.getElementById('timer-display').innerText = secondsLeft + 's';
         }
 
         function setMarket(market) {
@@ -818,6 +788,7 @@
                 btn30s.className = 'market-btn';
                 btn1m.className = 'market-btn active-market';
             }
+            updateTimerAndPeriod();
             updatePreview();
         }
 
@@ -933,7 +904,7 @@
         }
 
         function getFormattedMessage() {
-            const period = document.getElementById('period-input').value || '50677';
+            const period = document.getElementById('period-input').value || '00000';
             const referralLink = "https://hgnice0.com/#/register?invitationCode=376851951983";
             const wingoTime = currentMarket === '30S' ? '𝟯𝟬𝗦' : '𝟲𝟬𝗦';
 
