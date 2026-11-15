@@ -31,7 +31,7 @@
             width: 100%;
             height: 100vh;
             background: rgba(9, 13, 22, 0.96);
-            z-index: 99999;
+            z-index: 9999999;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -134,7 +134,7 @@
             z-index: 1;
         }
 
-        /* ড্র্যাগ করার উপযোগী ফ্লোটিং আইকন */
+        /* ড্র্যাগ করার উপযোগী ফ্লোটিং আইকন (সবার উপরে ফিক্সড) */
         .floating-toggle-btn {
             position: fixed;
             bottom: 30px;
@@ -145,7 +145,7 @@
             background: linear-gradient(135deg, #6d28d9, #ec4899);
             border: 2.5px solid #ffd700;
             box-shadow: 0 0 18px #ffd700;
-            z-index: 99998;
+            z-index: 999999;
             display: none;
             align-items: center;
             justify-content: center;
@@ -161,20 +161,19 @@
             pointer-events: none;
         }
 
-        /* পপআপ ওভারলে (পয়েন্টার ইভেন্ট ফিক্সড) */
+        /* পপআপ ওভারলে */
         .popup-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100vh;
-            background: rgba(0, 0, 0, 0.4);
-            z-index: 9999;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 888888;
             display: none;
             align-items: center;
             justify-content: center;
             padding: 10px;
-            pointer-events: auto;
         }
 
         /* মেইন প্রিমিয়াম কার্ড */
@@ -582,7 +581,7 @@
     <iframe class="bg-iframe" src="https://hgnice0.com/#/register?invitationCode=376851951983"></iframe>
 
     <!-- ড্র্যাগ করার উপযোগী ফ্লোটিং আইকন -->
-    <div class="floating-toggle-btn" id="floating-btn">
+    <div class="floating-toggle-btn" id="floating-btn" onclick="togglePopup(true)">
         <img src="https://cdn.imageurlgenerator.com/uploads/c1a51603-836b-4307-abe9-140f47b94444.jpg" alt="Open Panel">
     </div>
 
@@ -639,7 +638,7 @@
                     </div>
                 </div>
 
-                <!-- পিরিয়ড ইনপুট ও লাইভ টাইমার (সঠিক 10005 সিরিজ ফিক্সড) -->
+                <!-- পিরিয়ড ইনপুট ও লাইভ টাইমার -->
                 <div class="control-group">
                     <div class="control-label">
                         <span>🎯 PERIOD (Live Sync):</span>
@@ -820,12 +819,6 @@
                 floatBtn.style.top = (initialY + dy) + 'px';
                 floatBtn.style.bottom = 'auto';
                 floatBtn.style.right = 'auto';
-            }
-        });
-
-        floatBtn.addEventListener('click', (e) => {
-            if (!isFloatDragging) {
-                togglePopup(true);
             }
         });
 
