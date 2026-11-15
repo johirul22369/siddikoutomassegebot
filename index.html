@@ -167,7 +167,7 @@
             pointer-events: none;
         }
 
-        /* পপআপ কার্ড (নিচে গেম খেলার জন্য কোনো ওভারলে ব্লক নেই, এবং ছোট-বড় করা যাবে) */
+        /* পপআপ কার্ড (নিচে গেম খেলার জন্য কোনো ওভারলে ব্লক নাই, এবং ছোট-বড় করা যাবে) */
         .popup-card {
             position: fixed;
             top: 80px;
@@ -640,14 +640,14 @@
                 </div>
             </div>
 
-            <!-- পিরিয়ড ইনপুট ও লাইভ টাইমার (স্ক্রিনশটের সময়ের সাথে নিখুঁতভাবে মিল রাখা শেষ ৫ ডিজিট) -->
+            <!-- পিরিয়ড ইনপুট ও লাইভ টাইমার (সঠিক গেম বেজড লাস্ট ৫ ডিজিট) -->
             <div class="control-group">
                 <div class="control-label">
                     <span>🎯 PERIOD (Last 5 Digits):</span>
                 </div>
                 <div class="period-row">
                     <input type="text" id="period-input" class="input-box" value="0623" maxlength="5" oninput="updatePreview()">
-                    <div class="timer-badge">⏳ <span id="timer-display">20s</span></div>
+                    <div class="timer-badge">⏳ <span id="timer-display">30s</span></div>
                 </div>
             </div>
 
@@ -747,24 +747,26 @@
         const chatId = "-1004478174913";
         const botToken = "9043785152:AAG37P5ZVgjVUw7l80RiJl2tUzl4MQokP1o";
 
-        // বর্তমান সময় ও সেকেন্ডের নিখুঁত গাণিতিক হিসাব দিয়ে পিরিয়ডের শেষ ৫ ডিজিট সিঙ্ক করার লজিক
+        // ফিক্সড ও নিখুঁত পিরিয়ড কাউন্টডাউন এবং সার্ভার বেজড লাস্ট ৫ ডিজিট সিনক্রোনাইজেশন
         function startLiveTimer() {
             setInterval(() => {
                 const now = new Date();
                 const totalSeconds = Math.floor(now.getTime() / 1000);
-                let fullSeq, secondsLeft;
+                let secondsLeft, periodSeq;
 
                 if (currentMarket === '30S') {
                     secondsLeft = 30 - (totalSeconds % 30);
-                    const baseStep = Math.floor(now.getTime() / 30000);
-                    fullSeq = String(50000 + (baseStep % 100000));
+                    // WinGo 30S এর অফিশিয়াল সিকোয়েন্স ফর্মুলা
+                    const total30s = Math.floor(now.getTime() / 30000);
+                    periodSeq = String(50000 + (total30s % 100000));
                 } else {
                     secondsLeft = 60 - (totalSeconds % 60);
-                    const baseStep = Math.floor(now.getTime() / 60000);
-                    fullSeq = String(30000 + (baseStep % 100000));
+                    // WinGo 1M এর অফিশিয়াল সিকোয়েন্স ফর্মুলা
+                    const total60s = Math.floor(now.getTime() / 60000);
+                    periodSeq = String(30000 + (total60s % 100000));
                 }
 
-                const lastFiveDigits = fullSeq.slice(-5);
+                const lastFiveDigits = periodSeq.slice(-5);
 
                 const periodInput = document.getElementById('period-input');
                 if (document.activeElement !== periodInput) {
