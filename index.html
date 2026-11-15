@@ -134,7 +134,7 @@
             z-index: 1;
         }
 
-        /* ড্র্যাগ ও মুভ করার উপযোগী ফ্লোটিং আইকন (সর্বদা উপরে এবং ড্র্যাগএবল) */
+        /* ড্র্যাগ ও মুভ করার উপযোগী ফ্লোটিং আইকন */
         .floating-toggle-btn {
             position: fixed;
             bottom: 30px;
@@ -161,14 +161,14 @@
             pointer-events: none;
         }
 
-        /* পপআপ ওভারলে (ব্যাকগ্রাউন্ড ট্রান্সপারেন্ট যাতে iframe এও টাচ করা যায়, বাইরে ক্লিক করলে অফ হবে) */
+        /* পপআপ ওভারলে */
         .popup-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100vh;
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.4);
             z-index: 888888;
             display: none;
             align-items: center;
@@ -176,7 +176,7 @@
             padding: 10px;
         }
 
-        /* মেইন প্রিমিয়াম কার্ড (সম্পূর্ণ ড্র্যাগএবল ও রিসাইজএবল) */
+        /* মেইন প্রিমিয়াম কার্ড */
         .popup-card {
             position: absolute;
             width: 360px;
@@ -191,10 +191,9 @@
             display: flex;
             flex-direction: column;
             resize: both;
-            touch-action: none;
         }
 
-        /* পপআপ হেডার (ড্র্যাগ করার মেইন হ্যান্ডেল) */
+        /* পপআপ হেডার (ড্র্যাগ হ্যান্ডেল) */
         .popup-header {
             background: #1e1b4b;
             padding: 10px 14px;
@@ -204,6 +203,7 @@
             border-bottom: 1.5px solid rgba(255, 215, 0, 0.3);
             flex-shrink: 0;
             cursor: move;
+            touch-action: none;
         }
 
         .brand-info {
@@ -256,7 +256,7 @@
             pointer-events: auto;
         }
 
-        /* পপআপ বডি (ভিতরের এলিমেন্টগুলোতে টাচ ও স্ক্রল কাজ করবে) */
+        /* পপআপ বডি */
         .popup-body {
             padding: 12px 14px;
             display: flex;
@@ -265,8 +265,6 @@
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
             flex-grow: 1;
-            touch-action: pan-y;
-            cursor: default;
         }
 
         .control-group {
@@ -381,7 +379,6 @@
             text-align: left;
             font-family: 'Montserrat', sans-serif !important;
             cursor: text;
-            touch-action: manipulation;
         }
 
         .input-box:focus {
@@ -524,7 +521,6 @@
             user-select: text;
             -webkit-user-select: text;
             cursor: text;
-            touch-action: manipulation;
         }
 
         /* সেন্ড বাটন */
@@ -587,7 +583,7 @@
     <!-- ব্যাকগ্রাউন্ড ফুল-স্ক্রিন রেফারেল Iframe -->
     <iframe class="bg-iframe" src="https://hgnice0.com/#/register?invitationCode=376851951983"></iframe>
 
-    <!-- ড্র্যাগ করার উপযোগী ফ্লোটিং আইকন (যেকোনো জায়গায় মুভ করা যাবে) -->
+    <!-- ড্র্যাগ ও ক্লিক করার উপযোগী ফ্লোটিং আইকন -->
     <div class="floating-toggle-btn" id="floating-btn">
         <img src="https://cdn.imageurlgenerator.com/uploads/c1a51603-836b-4307-abe9-140f47b94444.jpg" alt="Open Panel">
     </div>
@@ -800,13 +796,13 @@
             updatePreview();
         }
 
-        // ফ্লোটিং আইকন পারফেক্ট ড্র্যাগিং এবং ক্লিক লজিক
+        // ফ্লোটিং আইকন পারফেক্ট ড্র্যাগ ও ক্লিক হ্যান্ডলিং
         const floatBtn = document.getElementById('floating-btn');
-        let isFloatDragging = false;
+        let fMoved = false;
         let fStartX, fStartY, fInitialX, fInitialY;
 
         floatBtn.addEventListener('pointerdown', (e) => {
-            isFloatDragging = false;
+            fMoved = false;
             fStartX = e.clientX;
             fStartY = e.clientY;
             fInitialX = floatBtn.offsetLeft;
@@ -818,10 +814,8 @@
             if (e.buttons === 0) return;
             const dx = e.clientX - fStartX;
             const dy = e.clientY - fStartY;
-            if (Math.abs(dx) > 4 || Math.abs(dy) > 4) {
-                isFloatDragging = true;
-            }
-            if (isFloatDragging) {
+            if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
+                fMoved = true;
                 floatBtn.style.left = (fInitialX + dx) + 'px';
                 floatBtn.style.top = (fInitialY + dy) + 'px';
                 floatBtn.style.bottom = 'auto';
@@ -829,8 +823,8 @@
             }
         });
 
-        floatBtn.addEventListener('click', (e) => {
-            if (!isFloatDragging) {
+        floatBtn.addEventListener('pointerup', (e) => {
+            if (!fMoved) {
                 togglePopup(true);
             }
         });
@@ -868,7 +862,7 @@
             const overlay = document.getElementById('popup-overlay');
             if (show) {
                 overlay.style.display = 'flex';
-                if (!popupCard.style.left) {
+                if (!popupCard.style.left || popupCard.style.left === '') {
                     popupCard.style.left = '50%';
                     popupCard.style.top = '50%';
                     popupCard.style.transform = 'translate(-50%, -50%)';
