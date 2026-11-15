@@ -656,13 +656,13 @@
                     </div>
                 </div>
 
-                <!-- পিরিয়ড ইনপুট ও লাইভ টাইমার -->
+                <!-- পিরিয়ড ইনপুট ও লাইভ টাইমার (সঠিক গেম বেজড লাস্ট ৫ ডিজিট) -->
                 <div class="control-group">
                     <div class="control-label">
-                        <span>🎯 PERIOD (Live Sync):</span>
+                        <span>🎯 PERIOD (Last 5 Digits):</span>
                     </div>
                     <div class="period-row">
-                        <input type="text" id="period-input" class="input-box" value="20261115100050519" oninput="updatePreview()">
+                        <input type="text" id="period-input" class="input-box" value="02519" maxlength="5" oninput="updatePreview()">
                         <div class="timer-badge">⏳ <span id="timer-display">30s</span></div>
                     </div>
                 </div>
@@ -764,31 +764,31 @@
         const chatId = "-1004478174913";
         const botToken = "9043785152:AAG37P5ZVgjVUw7l80RiJl2tUzl4MQokP1o";
 
-        // নিখুঁত লাইভ পিরিয়ড ও কাউন্টডাউন টাইমার
+        // গেমের সঠিক পিরিয়ড সিকোয়েন্সের সাথে মিল রেখে লাইভ পিরিয়ড ও কাউন্টডাউন টাইমার জেনারেটর
         function startLiveTimer() {
             setInterval(() => {
                 const now = new Date();
-                const year = now.getFullYear();
-                const month = String(now.getMonth() + 1).padStart(2, '0');
-                const day = String(now.getDate()).padStart(2, '0');
-                const dateStr = `${year}${month}${day}`;
-
                 const totalSeconds = Math.floor(now.getTime() / 1000);
-                let periodVal, secondsLeft;
+                let fullSeq, secondsLeft;
 
                 if (currentMarket === '30S') {
                     secondsLeft = 30 - (totalSeconds % 30);
-                    const total30s = Math.floor(now.getTime() / 30000);
-                    periodVal = `${dateStr}10005${String(total30s).slice(-4)}`;
+                    // WinGo 30S সার্ভার সিকোয়েন্স ফর্মুলা
+                    const baseStep = Math.floor(now.getTime() / 30000);
+                    fullSeq = String(50000 + (baseStep % 100000));
                 } else {
                     secondsLeft = 60 - (totalSeconds % 60);
-                    const total60s = Math.floor(now.getTime() / 60000);
-                    periodVal = `${dateStr}10001${String(total60s).slice(-4)}`;
+                    // WinGo 1M সার্ভার সিকোয়েন্স ফর্মুলা
+                    const baseStep = Math.floor(now.getTime() / 60000);
+                    fullSeq = String(30000 + (baseStep % 100000));
                 }
+
+                // পিরিয়ড নাম্বারের শুধুমাত্র শেষের ৫টি ডিজিট
+                const lastFiveDigits = fullSeq.slice(-5);
 
                 const periodInput = document.getElementById('period-input');
                 if (document.activeElement !== periodInput) {
-                    periodInput.value = periodVal;
+                    periodInput.value = lastFiveDigits;
                     updatePreview();
                 }
 
@@ -936,11 +936,11 @@
         }
 
         function getFormattedMessage() {
-            const period = document.getElementById('period-input').value || '20261115100050519';
+            const period = document.getElementById('period-input').value || '02519';
             const referralLink = "https://hgnice0.com/#/register?invitationCode=376851951983";
             const wingoTime = currentMarket === '30S' ? '𝟯𝟬𝗦' : '𝟲𝟬𝗦';
 
-            return `👑 SIDDIK VIP SIGNAL 👑\n▱▱▱▱▱▱▱▱▱▱▱▱▱▱\n💎 𝐏𝐄𝐑𝐈𝐎𝐃 ➤ 📅 ${period}\n🎯 𝐀𝐂𝐓𝐈𝐎𝐍 ➤ BET ${currentAction}\n🎨 𝐂𝐎𝐋𝐎𝐑 ➤ ${currentColorEmoji} ${currentColor}\n🔢 𝐍𝐔𝐌𝐁𝐄𝐑 ➤ 💠 [ ${currentNumber} ]\n⚡ 𝐖𝐈𝐍𝐆𝐎 ➤ ${wingoTime} ⏱️\n▱▱▱▱▱▱▱▱▱▱▱▱▱▱\n🔗 [𝗗𝗜𝗥𝗘𝗖𝗧 𝗪𝗘𝗕 𝗘𝗡𝗧𝗥𝗬](${referralLink})`;
+            return `👑 SIDDIK VIP SIGNAL 👑\n▱▱▱▱▱▱▱▱▱▱▱▱▱▱\n💎 𝐏𝐄𝐑𝐈𝐎𝐃 ➤ 📅 ...${period}\n🎯 𝐀𝐂𝐓𝐈𝐎𝐍 ➤ BET ${currentAction}\n🎨 𝐂𝐎𝐋𝐎𝐑 ➤ ${currentColorEmoji} ${currentColor}\n🔢 𝐍𝐔𝐌𝐁𝐄𝐑 ➤ 💠 [ ${currentNumber} ]\n⚡ 𝐖𝐈𝐍𝐆𝐎 ➤ ${wingoTime} ⏱️\n▱▱▱▱▱▱▱▱▱▱▱▱▱▱\n🔗 [𝗗𝗜𝗥𝗘𝗖𝗧 𝗪𝗘𝗕 𝗘𝗡𝗧𝗥𝗬](${referralLink})`;
         }
 
         function updatePreview() {
