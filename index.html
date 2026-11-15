@@ -332,7 +332,7 @@
 
         .sticker-card {
             background: #1e293b;
-            border: 1.5px solid #475569;
+            border: 1px solid #475569;
             border-radius: 8px;
             padding: 6px 8px;
             display: flex;
@@ -796,7 +796,7 @@
             updatePreview();
         }
 
-        // ফ্লোটিং আইকন পারফেক্ট ড্র্যাগ ও টাচ/ক্লিক হ্যান্ডলিং
+        // ফ্লোটিং আইকন পারফেক্ট ড্র্যাগ ও টাচ/ক্লিক হ্যান্ডলিং (গ্যারান্টিড ফিক্স)
         const floatBtn = document.getElementById('floating-btn');
         let fStartX = 0, fStartY = 0, fInitialX = 0, fInitialY = 0;
         let fHasMoved = false;
@@ -823,7 +823,7 @@
             }
         });
 
-        floatBtn.addEventListener('click', (e) => {
+        floatBtn.addEventListener('pointerup', (e) => {
             if (!fHasMoved) {
                 togglePopup(true);
             }
