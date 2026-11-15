@@ -177,7 +177,7 @@
             pointer-events: none;
         }
 
-        /* মেইন প্রিমিয়াম কার্ড (স্ক্রল ও ল্যাগ ফিক্সড) */
+        /* মেইন প্রিমিয়াম কার্ড (স্মুথ স্ক্রলিং ও ফাস্ট রেন্ডারিং) */
         .popup-card {
             position: absolute;
             width: 360px;
@@ -256,7 +256,7 @@
             pointer-events: auto;
         }
 
-        /* পপআপ বডি (স্মুথ স্ক্রলিং এনাবল করা হয়েছে) */
+        /* পপআপ বডি */
         .popup-body {
             padding: 12px 14px;
             display: flex;
@@ -300,7 +300,6 @@
             font-weight: 800;
             cursor: pointer;
             text-align: center;
-            transition: background 0.15s ease;
         }
 
         .market-btn.active-market {
@@ -608,7 +607,7 @@
                 <button class="minimize-btn" onclick="togglePopup(false)">✕</button>
             </div>
 
-            <!-- বডি (স্মুথ স্ক্রলিং সহ) -->
+            <!-- বডি -->
             <div class="popup-body">
                 
                 <!-- মার্কেট সিলেকশন (30S / 1M) -->
@@ -643,13 +642,13 @@
                     </div>
                 </div>
 
-                <!-- পিরিয়ড ইনপুট ও লাইভ টাইমার (সঠিক 50000+ সিরিজ ফিক্সড) -->
+                <!-- পিরিয়ড ইনপুট ও লাইভ টাইমার (সঠিক 10005 সিরিজ ফিক্সড) -->
                 <div class="control-group">
                     <div class="control-label">
                         <span>🎯 PERIOD (Live Sync):</span>
                     </div>
                     <div class="period-row">
-                        <input type="text" id="period-input" class="input-box" value="2026111550000" oninput="updatePreview()">
+                        <input type="text" id="period-input" class="input-box" value="20261115100050519" oninput="updatePreview()">
                         <div class="timer-badge">⏳ <span id="timer-display">30s</span></div>
                     </div>
                 </div>
@@ -748,10 +747,10 @@
         let currentColor = 'GREEN';
         let currentColorEmoji = '🟢';
         let currentNumber = '1';
-        const chatId = "-1004478174913";[span_0](start_span)[span_0](end_span)
+        const chatId = "-1004478174913";[span_1](start_span)[span_1](end_span)
         const botToken = "9043785152:AAG37P5ZVgjVUw7l80RiJl2tUzl4MQokP1o";
 
-        // ব্যাকগ্রাউন্ড সাইটের আসল ফরম্যাট (50000+ সিরিজ) অনুযায়ী লাইভ পিরিয়ড ও কাউন্টডাউন টাইমার
+        // ব্যাকগ্রাউন্ড সাইটের আসল ফরম্যাট (`10005` সিরিজ) অনুযায়ী লাইভ পিরিয়ড ও কাউন্টডাউন টাইমার
         function startLiveTimer() {
             setInterval(() => {
                 const now = new Date();
@@ -766,11 +765,11 @@
                 if (currentMarket === '30S') {
                     secondsLeft = 30 - (totalSeconds % 30);
                     const total30s = Math.floor(now.getTime() / 30000);
-                    periodVal = `${dateStr}50000${String(total30s).slice(-4)}`;
+                    periodVal = `${dateStr}10005${String(total30s).slice(-4)}`;
                 } else {
                     secondsLeft = 60 - (totalSeconds % 60);
                     const total60s = Math.floor(now.getTime() / 60000);
-                    periodVal = `${dateStr}100000${String(total60s).slice(-4)}`;
+                    periodVal = `${dateStr}10001${String(total60s).slice(-4)}`;
                 }
 
                 const periodInput = document.getElementById('period-input');
@@ -919,7 +918,7 @@
         }
 
         function getFormattedMessage() {
-            const period = document.getElementById('period-input').value || '2026111550000';
+            const period = document.getElementById('period-input').value || '20261115100050519';
             const referralLink = "https://hgnice0.com/#/register?invitationCode=376851951983";
             const wingoTime = currentMarket === '30S' ? '𝟯𝟬𝗦' : '𝟲𝟬𝗦';
 
