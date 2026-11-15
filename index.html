@@ -23,6 +23,116 @@
             background: #090d16;
         }
 
+        /* সিকিউরিটি পাসওয়ার্ড লক স্ক্রিন ওভারলে */
+        .auth-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(9, 13, 22, 0.96);
+            backdrop-filter: blur(8px);
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .auth-card {
+            width: 100%;
+            max-width: 340px;
+            background: linear-gradient(160deg, #121826 0%, #090d16 100%);
+            border: 2.5px solid #ffd700;
+            border-radius: 22px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
+            animation: popIn 0.3s ease-out;
+        }
+
+        .auth-avatar {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            border: 2.5px solid #ffd700;
+            box-shadow: 0 0 15px #ffd700;
+            overflow: hidden;
+        }
+
+        .auth-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .auth-title {
+            font-size: 15px;
+            font-weight: 900;
+            color: #ffd700;
+            text-align: center;
+            letter-spacing: 0.8px;
+            text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+        }
+
+        .auth-subtitle {
+            font-size: 11px;
+            color: #38bdf8;
+            font-weight: 700;
+            text-align: center;
+            margin-top: -8px;
+        }
+
+        .auth-input {
+            width: 100%;
+            background: #0f172a;
+            border: 1.5px solid #475569;
+            border-radius: 10px;
+            padding: 10px 14px;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 700;
+            text-align: center;
+            outline: none;
+            letter-spacing: 2px;
+            user-select: text;
+            -webkit-user-select: text;
+        }
+
+        .auth-input:focus {
+            border-color: #ffd700;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+        }
+
+        .auth-btn {
+            width: 100%;
+            padding: 11px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #7c3aed, #4c1d95);
+            color: #ffffff;
+            font-size: 13.5px;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.5);
+            transition: transform 0.15s ease;
+        }
+
+        .auth-btn:active {
+            transform: scale(0.97);
+        }
+
+        .auth-error {
+            font-size: 11px;
+            color: #f87171;
+            font-weight: 700;
+            display: none;
+            text-align: center;
+        }
+
         /* ব্যাকগ্রাউন্ড ফুল-স্ক্রিন রেফারেল Iframe */
         .bg-iframe {
             width: 100%;
@@ -46,7 +156,7 @@
             border: 2.5px solid #ffd700;
             box-shadow: 0 0 18px #ffd700, 0 0 30px #ff3366;
             z-index: 9998;
-            display: flex;
+            display: none;
             align-items: center;
             justify-content: center;
             cursor: pointer;
@@ -67,7 +177,7 @@
             100% { transform: scale(1.06); box-shadow: 0 0 20px #00ff88, 0 0 35px #00ffff; }
         }
 
-        /* পপআপ ওভারলে - ব্যাকগ্রাউন্ডে টাচ সচল রাখতে pointer-events: none দেওয়া হলো */
+        /* পপআপ ওভারলে */
         .popup-overlay {
             position: fixed;
             top: 0;
@@ -80,12 +190,12 @@
             align-items: center;
             justify-content: center;
             padding: 10px;
-            overflow-y: auto;
             pointer-events: none;
         }
 
-        /* মেইন প্রিমিয়াম গোল্ডেন গ্লোয়িং কার্ড - শুধু পপআপের ভেতরে টাচ কাজ করবে */
+        /* মেইন প্রিমিয়াম গোল্ডেন গ্লোয়িং কার্ড */
         .popup-card {
+            position: absolute;
             width: 100%;
             max-width: 390px;
             max-height: 94vh;
@@ -96,8 +206,8 @@
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            animation: popIn 0.3s ease-out;
             pointer-events: auto;
+            touch-action: none;
         }
 
         @keyframes popIn {
@@ -113,6 +223,11 @@
             align-items: center;
             justify-content: space-between;
             border-bottom: 1.5px solid rgba(255, 215, 0, 0.3);
+            cursor: grab;
+        }
+
+        .popup-header:active {
+            cursor: grabbing;
         }
 
         .brand-info {
@@ -234,29 +349,42 @@
 
         .sticker-btns-row {
             display: flex;
-            gap: 6px;
+            gap: 8px;
             overflow-x: auto;
-            padding-bottom: 3px;
+            padding-bottom: 4px;
         }
 
-        .sticker-send-btn {
+        .sticker-card {
             background: #1e293b;
             border: 1px solid #475569;
-            border-radius: 7px;
-            padding: 6px 10px;
-            font-size: 14px;
-            color: #fff;
+            border-radius: 8px;
+            padding: 6px 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
             cursor: pointer;
-            white-space: nowrap;
+            min-width: 58px;
             transition: transform 0.15s ease, background 0.15s ease;
         }
 
-        .sticker-send-btn:active {
+        .sticker-card:active {
             transform: scale(0.9);
             background: #7c3aed;
         }
 
-        /* পিরিয়ড ইনপুট ও লাইভ টাইমার রো */
+        .s-emoji {
+            font-size: 18px;
+        }
+
+        .s-name {
+            font-size: 9px;
+            color: #38bdf8;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        /* পিরিয়ড ইনপুট ও লাইভ টাইমার */
         .period-row {
             display: flex;
             gap: 8px;
@@ -294,7 +422,7 @@
             font-weight: 800;
         }
 
-        /* অপশন বাটন গ্রিড (SMALL / BIG) */
+        /* অ্যাকশন সিলেকশন গ্রিড */
         .options-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -328,7 +456,74 @@
             box-shadow: 0 0 10px rgba(239, 68, 68, 0.4);
         }
 
-        /* লাইভ সিগন্যাল প্রিভিউ বক্স */
+        /* কালার সিলেকশন */
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+        }
+
+        .color-btn {
+            background: #1e293b;
+            border: 1.5px solid #475569;
+            border-radius: 8px;
+            padding: 7px;
+            color: #cbd5e1;
+            font-size: 11.5px;
+            font-weight: 800;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .color-btn.active-green {
+            background: #10b981;
+            border-color: #34d399;
+            color: #fff;
+            box-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
+        }
+
+        .color-btn.active-red {
+            background: #ef4444;
+            border-color: #f87171;
+            color: #fff;
+            box-shadow: 0 0 8px rgba(239, 68, 68, 0.5);
+        }
+
+        .color-btn.active-violet {
+            background: #8b5cf6;
+            border-color: #a78bfa;
+            color: #fff;
+            box-shadow: 0 0 8px rgba(139, 92, 246, 0.5);
+        }
+
+        /* নাম্বার সিলেকশন গ্রিড */
+        .number-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 5px;
+        }
+
+        .num-btn {
+            background: #1e293b;
+            border: 1.5px solid #475569;
+            border-radius: 7px;
+            padding: 6px;
+            color: #cbd5e1;
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .num-btn.active-num {
+            background: #f59e0b;
+            border-color: #ffd700;
+            color: #ffffff;
+            box-shadow: 0 0 8px rgba(245, 158, 11, 0.5);
+        }
+
+        /* সিগন্যাল প্রিভিউ বক্স */
         .preview-box {
             background: #090d16;
             border: 1.5px dashed #ffd700;
@@ -390,6 +585,20 @@
 </head>
 <body>
 
+    <!-- পাসওয়ার্ড প্রোটেকশন লক স্ক্রিন -->
+    <div class="auth-overlay" id="auth-overlay">
+        <div class="auth-card">
+            <div class="auth-avatar">
+                <img src="https://cdn.imageurlgenerator.com/uploads/c1a51603-836b-4307-abe9-140f47b94444.jpg" alt="Logo">
+            </div>
+            <div class="auth-title">🔐 SIDDIK VIP SECURITY LOCK</div>
+            <div class="auth-subtitle">চ্যানেল সুরক্ষিত রাখতে পাসওয়ার্ড দিন</div>
+            <input type="password" id="pass-input" class="auth-input" placeholder="ENTER PASSWORD">
+            <div id="auth-error" class="auth-error">❌ ভুল পাসওয়ার্ড! আবার চেষ্টা করুন।</div>
+            <button class="auth-btn" onclick="verifyPassword()">আনলক করুন 🚀</button>
+        </div>
+    </div>
+
     <!-- ব্যাকগ্রাউন্ড রেফারেল সাইট -->
     <iframe class="bg-iframe" src="https://hgnice0.com/#/register?invitationCode=376851951983"></iframe>
 
@@ -400,10 +609,10 @@
 
     <!-- মেইন পপআপ ওভারলে -->
     <div class="popup-overlay" id="popup-overlay">
-        <div class="popup-card">
+        <div class="popup-card" id="popup-card">
             
             <!-- হেডার -->
-            <div class="popup-header">
+            <div class="popup-header" id="popup-header">
                 <div class="brand-info">
                     <div class="brand-avatar">
                         <img src="https://cdn.imageurlgenerator.com/uploads/c1a51603-836b-4307-abe9-140f47b94444.jpg" alt="Logo">
@@ -430,20 +639,44 @@
                     </div>
                 </div>
 
-                <!-- স্টিকার প্যানেল (সরাসরি শুধু ইমোজি/স্টিকার যাবে, কোনো বাড়তি লেখা থাকবে না) -->
+                <!-- স্টিকার ও ইমোজি প্যানেল -->
                 <div class="sticker-panel-box">
                     <div class="sticker-title">
                         <span>✨ Patowari Stacker (Direct Send)</span>
                     </div>
                     <div class="sticker-btns-row">
-                        <button type="button" class="sticker-send-btn" onclick="sendStickerEmoji('🔥')">🔥</button>
-                        <button type="button" class="sticker-send-btn" onclick="sendStickerEmoji('💎')">💎</button>
-                        <button type="button" class="sticker-send-btn" onclick="sendStickerEmoji('🚀')">🚀</button>
-                        <button type="button" class="sticker-send-btn" onclick="sendStickerEmoji('👑')">👑</button>
-                        <button type="button" class="sticker-send-btn" onclick="sendStickerEmoji('🎯')">🎯</button>
-                        <button type="button" class="sticker-send-btn" onclick="sendStickerEmoji('⚡')">⚡</button>
-                        <button type="button" class="sticker-send-btn" onclick="sendStickerEmoji('🟢')">🟢</button>
-                        <button type="button" class="sticker-send-btn" onclick="sendStickerEmoji('🔴')">🔴</button>
+                        <div class="sticker-card" onclick="sendStickerEmoji('🔥')">
+                            <span class="s-emoji">🔥</span>
+                            <span class="s-name">Boom Shot</span>
+                        </div>
+                        <div class="sticker-card" onclick="sendStickerEmoji('💎')">
+                            <span class="s-emoji">💎</span>
+                            <span class="s-name">Win</span>
+                        </div>
+                        <div class="sticker-card" onclick="sendStickerEmoji('🚀')">
+                            <span class="s-emoji">🚀</span>
+                            <span class="s-name">Rocket</span>
+                        </div>
+                        <div class="sticker-card" onclick="sendStickerEmoji('👑')">
+                            <span class="s-emoji">👑</span>
+                            <span class="s-name">King</span>
+                        </div>
+                        <div class="sticker-card" onclick="sendStickerEmoji('🎯')">
+                            <span class="s-emoji">🎯</span>
+                            <span class="s-name">Target</span>
+                        </div>
+                        <div class="sticker-card" onclick="sendStickerEmoji('⚡')">
+                            <span class="s-emoji">⚡</span>
+                            <span class="s-name">Fast</span>
+                        </div>
+                        <div class="sticker-card" onclick="sendStickerEmoji('🟢')">
+                            <span class="s-emoji">🟢</span>
+                            <span class="s-name">Green</span>
+                        </div>
+                        <div class="sticker-card" onclick="sendStickerEmoji('🔴')">
+                            <span class="s-emoji">🔴</span>
+                            <span class="s-name">Red</span>
+                        </div>
                     </div>
                 </div>
 
@@ -466,6 +699,37 @@
                     <div class="options-grid">
                         <button type="button" id="btn-small" class="opt-btn active-small" onclick="setAction('SMALL')">SMALL</button>
                         <button type="button" id="btn-big" class="opt-btn" onclick="setAction('BIG')">BIG</button>
+                    </div>
+                </div>
+
+                <!-- কালার সিলেকশন -->
+                <div class="control-group">
+                    <div class="control-label">
+                        <span>🎨 COLOR SELECT:</span>
+                    </div>
+                    <div class="color-grid">
+                        <button type="button" id="color-green" class="color-btn active-green" onclick="setColor('GREEN', '🟢')">🟢 GREEN</button>
+                        <button type="button" id="color-red" class="color-btn" onclick="setColor('RED', '🔴')">🔴 RED</button>
+                        <button type="button" id="color-violet" class="color-btn" onclick="setColor('VIOLET', '🟣')">🟣 VIOLET</button>
+                    </div>
+                </div>
+
+                <!-- নাম্বার সিলেকশন (0 - 9) -->
+                <div class="control-group">
+                    <div class="control-label">
+                        <span>🔢 NUMBER SELECT (0-9):</span>
+                    </div>
+                    <div class="number-grid">
+                        <button type="button" id="num-0" class="num-btn" onclick="setNumber(0)">0</button>
+                        <button type="button" id="num-1" class="num-btn active-num" onclick="setNumber(1)">1</button>
+                        <button type="button" id="num-2" class="num-btn" onclick="setNumber(2)">2</button>
+                        <button type="button" id="num-3" class="num-btn" onclick="setNumber(3)">3</button>
+                        <button type="button" id="num-4" class="num-btn" onclick="setNumber(4)">4</button>
+                        <button type="button" id="num-5" class="num-btn" onclick="setNumber(5)">5</button>
+                        <button type="button" id="num-6" class="num-btn" onclick="setNumber(6)">6</button>
+                        <button type="button" id="num-7" class="num-btn" onclick="setNumber(7)">7</button>
+                        <button type="button" id="num-8" class="num-btn" onclick="setNumber(8)">8</button>
+                        <button type="button" id="num-9" class="num-btn" onclick="setNumber(9)">9</button>
                     </div>
                 </div>
 
@@ -492,8 +756,35 @@
     </div>
 
     <script>
+        const CORRECT_PASS = "SIDDIK786"; // তোর সিক্রেট পাসওয়ার্ড (প্রয়োজনে এখান থেকে পরিবর্তন করে নিতে পারবি)
+
+        function verifyPassword() {
+            const inputVal = document.getElementById('pass-input').value;
+            const errorBox = document.getElementById('auth-error');
+
+            if (inputVal === CORRECT_PASS) {
+                document.getElementById('auth-overlay').style.display = 'none';
+                document.getElementById('floating-btn').style.display = 'flex';
+                updatePreview();
+                startLiveTimer();
+            } else {
+                errorBox.style.display = 'block';
+                document.getElementById('pass-input').value = '';
+            }
+        }
+
+        // এন্টার প্রেস করলেও যেন আনলক হয়
+        document.getElementById('pass-input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                verifyPassword();
+            }
+        });
+
         let currentAction = 'SMALL';
         let currentMarket = '30S';
+        let currentColor = 'GREEN';
+        let currentColorEmoji = '🟢';
+        let currentNumber = '1';
         const chatId = "-1004478174913"; // তোর প্রাইভেট চ্যানেল আইডি[span_0](start_span)[span_0](end_span)
         const botToken = "9043785152:AAG37P5ZVgjVUw7l80RiJl2tUzl4MQokP1o";
 
@@ -540,11 +831,11 @@
 
         // ফ্লোটিং আইকন ড্র্যাগিং লজিক
         const floatBtn = document.getElementById('floating-btn');
-        let isDragging = false;
+        let isFloatDragging = false;
         let startX, startY, initialX, initialY;
 
         floatBtn.addEventListener('pointerdown', (e) => {
-            isDragging = false;
+            isFloatDragging = false;
             startX = e.clientX;
             startY = e.clientY;
             initialX = floatBtn.offsetLeft;
@@ -557,9 +848,9 @@
             const dx = e.clientX - startX;
             const dy = e.clientY - startY;
             if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
-                isDragging = true;
+                isFloatDragging = true;
             }
-            if (isDragging) {
+            if (isFloatDragging) {
                 floatBtn.style.left = (initialX + dx) + 'px';
                 floatBtn.style.top = (initialY + dy) + 'px';
                 floatBtn.style.bottom = 'auto';
@@ -568,8 +859,37 @@
         });
 
         floatBtn.addEventListener('click', (e) => {
-            if (!isDragging) {
+            if (!isFloatDragging) {
                 togglePopup(true);
+            }
+        });
+
+        // পপআপ উইন্ডো ড্র্যাগিং লজিক
+        const popupCard = document.getElementById('popup-card');
+        const popupHeader = document.getElementById('popup-header');
+        let isPopupDragging = false;
+        let pStartX, pStartY, pInitialX, pInitialY;
+
+        popupHeader.addEventListener('pointerdown', (e) => {
+            isPopupDragging = false;
+            pStartX = e.clientX;
+            pStartY = e.clientY;
+            pInitialX = popupCard.offsetLeft;
+            pInitialY = popupCard.offsetTop;
+            popupHeader.setPointerCapture(e.pointerId);
+        });
+
+        popupHeader.addEventListener('pointermove', (e) => {
+            if (e.buttons === 0) return;
+            const dx = e.clientX - pStartX;
+            const dy = e.clientY - pStartY;
+            if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
+                isPopupDragging = true;
+            }
+            if (isPopupDragging) {
+                popupCard.style.left = (pInitialX + dx) + 'px';
+                popupCard.style.top = (pInitialY + dy) + 'px';
+                popupCard.style.transform = 'none';
             }
         });
 
@@ -577,6 +897,9 @@
             const overlay = document.getElementById('popup-overlay');
             if (show) {
                 overlay.style.display = 'flex';
+                popupCard.style.left = '50%';
+                popupCard.style.top = '50%';
+                popupCard.style.transform = 'translate(-50%, -50%)';
             } else {
                 overlay.style.display = 'none';
             }
@@ -597,24 +920,46 @@
             updatePreview();
         }
 
+        function setColor(colorName, emoji) {
+            currentColor = colorName;
+            currentColorEmoji = emoji;
+            
+            document.getElementById('color-green').className = 'color-btn';
+            document.getElementById('color-red').className = 'color-btn';
+            document.getElementById('color-violet').className = 'color-btn';
+
+            if (colorName === 'GREEN') {
+                document.getElementById('color-green').className = 'color-btn active-green';
+            } else if (colorName === 'RED') {
+                document.getElementById('color-red').className = 'color-btn active-red';
+            } else {
+                document.getElementById('color-violet').className = 'color-btn active-violet';
+            }
+            updatePreview();
+        }
+
+        function setNumber(num) {
+            currentNumber = num;
+            for (let i = 0; i <= 9; i++) {
+                document.getElementById('num-' + i).className = 'num-btn';
+            }
+            document.getElementById('num-' + num).className = 'num-btn active-num';
+            updatePreview();
+        }
+
         function getFormattedMessage() {
             const period = document.getElementById('period-input').value || '50360';
             const referralLink = "https://hgnice0.com/#/register?invitationCode=376851951983";
             const wingoTime = currentMarket === '30S' ? '𝟯𝟬𝗦' : '𝟲𝟬𝗦';
 
-            return `🔥 𝗦𝗠𝗔𝗟𝗟 𝗦𝗜𝗚𝗡𝗔𝗟 🔥\n▱▱▱▱▱▱▱▱▱▱▱▱▱▱\n💎 𝐏𝐄𝐑𝐈𝐎𝐃 ➤ 📅 ${period}\n🎯 𝐀𝐂𝐓𝐈𝐎𝐍 ➤ 𝐁𝐄𝐓 ${currentAction}\n⚡ 𝐖𝐈𝐍𝐆𝐎 ➤ ${wingoTime} ⏱️\n▱▱▱▱▱▱▱▱▱▱▱▱▱▱\n🔗 [𝗗𝗜𝗥𝗘𝗖𝗧 𝗪𝗘𝗕 𝗘𝗡𝗧𝗥𝗬](${referralLink})`;
+            return `🔥 𝗦𝗨𝗥𝗘𝗦𝗛𝗢𝗧 𝗦𝗜𝗚𝗡𝗔𝗟 🔥\n▱▱▱▱▱▱▱▱▱▱▱▱▱▱\n💎 𝐏𝐄𝐑𝐈𝐎𝐃 ➤ 📅 ${period}\n🎯 𝐀𝐂𝐓𝐈𝐎𝐍 ➤ 𝐁𝐄𝐓 ${currentAction}\n🎨 𝐂𝐎𝐋𝐎𝐑 ➤ ${currentColorEmoji} ${currentColor}\n🔢 𝐍𝐔𝐌𝐁𝐄𝐑 ➤ 💠 [ ${currentNumber} ]\n⚡ 𝐖𝐈𝐍𝐆𝐎 ➤ ${wingoTime} ⏱️\n▱▱▱▱▱▱▱▱▱▱▱▱▱▱\n🔗 [𝗗𝗜𝗥𝗘𝗖𝗧 𝗪𝗘𝗕 𝗘𝗡𝗧𝗥𝗬](${referralLink})`;
         }
 
         function updatePreview() {
             document.getElementById('signal-preview').innerText = getFormattedMessage();
         }
 
-        window.onload = function() {
-            updatePreview();
-            startLiveTimer();
-        };
-
-        // শুধু ডাইরেক্ট ইমোজি পাঠানোর ফাংশন (কোনো বাড়তি লেখা থাকবে না)
+        // ডাইরেক্ট ইমোজি পাঠানোর ফাংশন
         function sendStickerEmoji(emojiSymbol) {
             const apiUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
 
