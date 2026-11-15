@@ -640,7 +640,7 @@
                 </div>
             </div>
 
-            <!-- পিরিয়ড ইনপুট ও লাইভ টাইমার (সরাসরি সাইট বা লাইভ গেমের ডেটা থেকে সিঙ্ক হবে) -->
+            <!-- পিরিয়ড ইনপুট ও লাইভ টাইমার -->
             <div class="control-group">
                 <div class="control-label">
                     <span>🎯 PERIOD (Last 5 Digits):</span>
@@ -748,32 +748,36 @@
         const chatId = "-1004478174913";
         const botToken = "9043785152:AAG37P5ZVgjVUw7l80RiJl2tUzl4MQokP1o";
 
-        // ব্যাকগ্রাউন্ড iframe থেকে লাইভ গেমের রিয়েল পিরিয়ড ও কাউন্টডাউন রিড করার স্মার্ট ফাংশন
+        // ব্যাকগ্রাউন্ড iframe থেকে লাইভ গেমের রিয়েল পিরিয়ড ও কাউন্টডাউন রিড করার আপডেট করা ফাংশন
         function fetchLiveGameData() {
+            let foundPeriod = false;
             try {
                 const iframe = document.querySelector('.bg-iframe');
                 if (iframe && iframe.contentWindow) {
                     const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
                     if (iframeDoc) {
-                        // সাইট থেকে পিরিয়ড টেক্সট খোঁজা
                         const allElements = iframeDoc.querySelectorAll('*');
                         for (let el of allElements) {
                             let text = el.innerText ? el.innerText.trim() : '';
-                            // উইনগো পিরিয়ড সাধারণত লম্বা ডিজিটের হয় (যেমন 17 বা তার বেশি সংখ্যা)
-                            if (/^\d{16,18}$/.test(text)) {
+                            // উইনগো গেমের পিরিয়ড সাধারণত ১৭ ডিজিটের হয় (যেমন: 20261115100050660)
+                            if (/^\d{17}$/.test(text)) {
                                 const lastFive = text.slice(-5);
                                 const periodInput = document.getElementById('period-input');
                                 if (document.activeElement !== periodInput) {
                                     periodInput.value = lastFive;
                                     updatePreview();
                                 }
+                                foundPeriod = true;
                                 break;
                             }
                         }
                     }
                 }
             } catch (err) {
-                // ক্রস-অরিজিন পলিসির কারণে সরাসরি iframe রিড করা না গেলে ফলব্যাক টাইম লজিক ব্যবহার হবে
+                // ক্রস-অরিজিন পলিসির কারণে ফ্রেম রিড করা না গেলে ফলব্যাক লজিক কাজ করবে
+            }
+
+            if (!foundPeriod) {
                 fallbackTimeCalculation();
             }
         }
