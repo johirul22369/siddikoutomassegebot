@@ -34,23 +34,24 @@
             z-index: 1;
         }
 
-        /* ফ্লোটিং হ্যাক আইকন */
+        /* ড্র্যাগ করার উপযোগী ফ্লোটিং আইকন */
         .floating-toggle-btn {
             position: fixed;
-            bottom: 24px;
+            bottom: 30px;
             right: 20px;
-            width: 58px;
-            height: 58px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             background: linear-gradient(135deg, #6d28d9, #ec4899);
             border: 2.5px solid #ffd700;
             box-shadow: 0 0 18px #ffd700, 0 0 30px #ff3366;
             z-index: 9998;
-            display: none;
+            display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             overflow: hidden;
+            touch-action: none;
             animation: pulseGlow 2s infinite alternate;
         }
 
@@ -58,6 +59,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            pointer-events: none;
         }
 
         @keyframes pulseGlow {
@@ -65,21 +67,21 @@
             100% { transform: scale(1.06); box-shadow: 0 0 20px #00ff88, 0 0 35px #00ffff; }
         }
 
-        /* পপআপ ওভারলে - ব্যাকগ্রাউন্ডে টাচ সচল রাখতে */
+        /* পপআপ ওভারলে */
         .popup-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100vh;
-            background: transparent;
+            background: rgba(9, 13, 22, 0.6);
+            backdrop-filter: blur(4px);
             z-index: 9999;
-            display: flex;
+            display: none;
             align-items: center;
             justify-content: center;
             padding: 10px;
             overflow-y: auto;
-            pointer-events: none;
         }
 
         /* মেইন প্রিমিয়াম গোল্ডেন গ্লোয়িং কার্ড */
@@ -95,7 +97,6 @@
             display: flex;
             flex-direction: column;
             animation: popIn 0.3s ease-out;
-            pointer-events: auto;
         }
 
         @keyframes popIn {
@@ -186,7 +187,34 @@
             align-items: center;
         }
 
-        /* স্টিকার বাটন প্যানেল (অ্যাপের ভেতর থেকে এক ক্লিকে স্টিকার পাঠানোর জন্য) */
+        /* মার্কেট সিলেকশন বাটন (30S / 1M) */
+        .market-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .market-btn {
+            background: #1e293b;
+            border: 1.5px solid #475569;
+            border-radius: 8px;
+            padding: 7px;
+            color: #cbd5e1;
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .market-btn.active-market {
+            background: linear-gradient(135deg, #7c3aed, #4c1d95);
+            border-color: #ffd700;
+            color: #ffffff;
+            box-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+        }
+
+        /* স্টিকার প্যানেল */
         .sticker-panel-box {
             background: rgba(15, 23, 42, 0.9);
             border: 1px solid #ffd700;
@@ -201,9 +229,6 @@
             font-size: 11.5px;
             color: #ffd700;
             font-weight: 800;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
 
         .sticker-btns-row {
@@ -230,7 +255,7 @@
             background: #7c3aed;
         }
 
-        /* পিরিয়ড ইনপুট ও টাইমার রো */
+        /* পিরিয়ড ইনপুট ও লাইভ টাইমার রো */
         .period-row {
             display: flex;
             gap: 8px;
@@ -268,7 +293,7 @@
             font-weight: 800;
         }
 
-        /* অপশন বাটন গ্রিড */
+        /* অপশন বাটন গ্রিড (SMALL / BIG) */
         .options-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -367,8 +392,8 @@
     <!-- ব্যাকগ্রাউন্ড রেফারেল সাইট -->
     <iframe class="bg-iframe" src="https://hgnice0.com/#/register?invitationCode=376851951983"></iframe>
 
-    <!-- মিনিমাইজ করলে ফ্লোটিং আইকন -->
-    <div class="floating-toggle-btn" id="floating-btn" onclick="togglePopup(true)">
+    <!-- ড্র্যাগ করার উপযোগী ফ্লোটিং আইকন -->
+    <div class="floating-toggle-btn" id="floating-btn">
         <img src="https://cdn.imageurlgenerator.com/uploads/c1a51603-836b-4307-abe9-140f47b94444.jpg" alt="Open Panel">
     </div>
 
@@ -384,7 +409,7 @@
                     </div>
                     <div class="brand-text">
                         <h3>👑 SIDDIK VIP SYSTEM 👑</h3>
-                        <span>Manual Signal & Bot Engine (30S)</span>
+                        <span>Live WinGo Bot Engine</span>
                     </div>
                 </div>
                 <button class="minimize-btn" onclick="togglePopup(false)">✕</button>
@@ -393,7 +418,18 @@
             <!-- বডি -->
             <div class="popup-body">
                 
-                <!-- প্যানেল থেকে সরাসরি স্টিকার / ইমোজি পাঠানোর শর্টকাট -->
+                <!-- মার্কেট সিলেকশন (30S / 1M) -->
+                <div class="control-group">
+                    <div class="control-label">
+                        <span>📊 MARKET SELECT:</span>
+                    </div>
+                    <div class="market-grid">
+                        <button type="button" id="market-30s" class="market-btn active-market" onclick="setMarket('30S')">WinGo 30S</button>
+                        <button type="button" id="market-1m" class="market-btn" onclick="setMarket('1M')">WinGo 1M</button>
+                    </div>
+                </div>
+
+                <!-- স্টিকার প্যানেল -->
                 <div class="sticker-panel-box">
                     <div class="sticker-title">
                         <span>✨ Patowari Short Stacker (Direct Send)</span>
@@ -407,10 +443,10 @@
                     </div>
                 </div>
 
-                <!-- পিরিয়ড ইনপুট -->
+                <!-- পিরিয়ড ইনপুট ও লাইভ টাইমার -->
                 <div class="control-group">
                     <div class="control-label">
-                        <span>🎯 PERIOD:</span>
+                        <span>🎯 PERIOD (Live Sync):</span>
                     </div>
                     <div class="period-row">
                         <input type="number" id="period-input" class="input-box" value="50360" oninput="updatePreview()">
@@ -453,23 +489,100 @@
 
     <script>
         let currentAction = 'SMALL';
-        const chatId = "-1004478174913"; // তোর প্রাইভেট চ্যানেল আইডি[span_0](start_span)[span_0](end_span)
+        let currentMarket = '30S'; // ডিফল্ট ৩০ সেকেন্ড মার্কেট
+        const chatId = "-1004478174913"; // তোর প্রাইভেট চ্যানেল আইডি[span_1](start_span)[span_1](end_span)
         const botToken = "9043785152:AAG37P5ZVgjVUw7l80RiJl2tUzl4MQokP1o";
 
-        // পপআপ ওপেন / মিনিমাইজ
+        // লাইভ পিরিয়ড ও কাউন্টডাউন টাইমার ইঞ্জিন (WinGo 30S & 1M Sync)
+        function startLiveTimer() {
+            setInterval(() => {
+                const now = new Date();
+                const totalSeconds = Math.floor(now.getTime() / 1000);
+                
+                let periodVal, secondsLeft, marketDuration;
+
+                if (currentMarket === '30S') {
+                    marketDuration = 30;
+                    secondsLeft = 30 - (totalSeconds % 30);
+                    periodVal = Math.floor(totalSeconds / 30) + 50000;
+                } else {
+                    marketDuration = 60;
+                    secondsLeft = 60 - (totalSeconds % 60);
+                    periodVal = Math.floor(totalSeconds / 60) + 80000;
+                }
+
+                // যদি ইনপুট বক্স ফোকাস করা না থাকে, তবে অটো লাইভ পিরিয়ড আপডেট হবে
+                const periodInput = document.getElementById('period-input');
+                if (document.activeElement !== periodInput) {
+                    periodInput.value = periodVal;
+                    updatePreview();
+                }
+
+                // টাইমার ব্যাজ আপডেট
+                document.getElementById('timer-display').innerText = secondsLeft + 's';
+            }, 1000);
+        }
+
+        // মার্কেট পরিবর্তন করার ফাংশন (30S / 1M)
+        function setMarket(market) {
+            currentMarket = market;
+            const btn30s = document.getElementById('market-30s');
+            const btn1m = document.getElementById('market-1m');
+
+            if (market === '30S') {
+                btn30s.className = 'market-btn active-market';
+                btn1m.className = 'market-btn';
+            } else {
+                btn30s.className = 'market-btn';
+                btn1m.className = 'market-btn active-market';
+            }
+            updatePreview();
+        }
+
+        // ফ্লোটিং আইকন ড্র্যাগিং (Move) লজিক
+        const floatBtn = document.getElementById('floating-btn');
+        let isDragging = false;
+        let startX, startY, initialX, initialY;
+
+        floatBtn.addEventListener('pointerdown', (e) => {
+            isDragging = false;
+            startX = e.clientX;
+            startY = e.clientY;
+            initialX = floatBtn.offsetLeft;
+            initialY = floatBtn.offsetTop;
+            floatBtn.setPointerCapture(e.pointerId);
+        });
+
+        floatBtn.addEventListener('pointermove', (e) => {
+            if (e.buttons === 0) return;
+            const dx = e.clientX - startX;
+            const dy = e.clientY - startY;
+            if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
+                isDragging = true;
+            }
+            if (isDragging) {
+                floatBtn.style.left = (initialX + dx) + 'px';
+                floatBtn.style.top = (initialY + dy) + 'px';
+                floatBtn.style.bottom = 'auto';
+                floatBtn.style.right = 'auto';
+            }
+        });
+
+        floatBtn.addEventListener('click', (e) => {
+            if (!isDragging) {
+                togglePopup(true);
+            }
+        });
+
         function togglePopup(show) {
             const overlay = document.getElementById('popup-overlay');
-            const floatBtn = document.getElementById('floating-btn');
             if (show) {
                 overlay.style.display = 'flex';
-                floatBtn.style.display = 'none';
             } else {
                 overlay.style.display = 'none';
-                floatBtn.style.display = 'flex';
             }
         }
 
-        // অ্যাকশন সেট করা (SMALL বা BIG)
         function setAction(action) {
             currentAction = action;
             const btnSmall = document.getElementById('btn-small');
@@ -485,25 +598,24 @@
             updatePreview();
         }
 
-        // সিগন্যাল টেক্সট জেনারেট করা (লিংক হাইড করা ফরম্যাট সহ)
+        // সিগন্যাল টেক্সট জেনারেট করা (মার켓 টাইপসহ)
         function getFormattedMessage() {
             const period = document.getElementById('period-input').value || '50360';
             const referralLink = "https://hgnice0.com/#/register?invitationCode=376851951983";
+            const wingoTime = currentMarket === '30S' ? '𝟯𝟬𝗦' : '𝟲𝟬𝗦';
 
-            return `🔥 𝗦𝗠𝗔𝗟𝗟 𝗦𝗜𝗚𝗡𝗔𝗟 🔥\n▱▱▱▱▱▱▱▱▱▱▱▱▱▱\n💎 𝐏𝐄𝐑𝐈𝐎𝐃 ➤ 📅 ${period}\n🎯 𝐀𝐂𝐓𝐈𝐎𝐍 ➤ 𝐁𝐄𝐓 ${currentAction}\n⚡ 𝐖𝐈𝐍𝐆𝐎 ➤ 𝟯𝟬𝗦 ⏱️\n▱▱▱▱▱▱▱▱▱▱▱▱▱▱\n🔗 [𝗗𝗜𝗥𝗘𝗖𝗧 𝗪𝗘𝗕 𝗘𝗡𝗧𝗥𝗬](${referralLink})`;
+            return `🔥 𝗦𝗠𝗔𝗟𝗟 𝗦𝗜𝗚𝗡𝗔𝗟 🔥\n▱▱▱▱▱▱▱▱▱▱▱▱▱▱\n💎 𝐏𝐄𝐑𝐈𝐎𝐃 ➤ 📅 ${period}\n🎯 𝐀𝐂𝐓𝐈𝐎𝐍 ➤ 𝐁𝐄𝐓 ${currentAction}\n⚡ 𝐖𝐈𝐍𝐆𝐎 ➤ ${wingoTime} ⏱️\n▱▱▱▱▱▱▱▱▱▱▱▱▱▱\n🔗 [𝗗𝗜𝗥𝗘𝗖𝗧 𝗪𝗘𝗕 𝗘𝗡𝗧𝗥𝗬](${referralLink})`;
         }
 
-        // প্রিভিউ আপডেট করা
         function updatePreview() {
             document.getElementById('signal-preview').innerText = getFormattedMessage();
         }
 
-        // পেজ লোড হওয়ার সাথে সাথে প্রিভিউ দেখাবে
         window.onload = function() {
             updatePreview();
+            startLiveTimer(); // লাইভ টাইমার চালু হলো
         };
 
-        // প্যানেল থেকে এক ক্লিকে চ্যানেলে স্টিকার স্টাইলের ইমোজি/মেসেজ পাঠানোর ফাংশন
         function sendStickerEmoji(emojiSymbol) {
             const stickerText = `${emojiSymbol} Patowari Short Signal Badge ${emojiSymbol}`;
             const apiUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
@@ -531,7 +643,6 @@
             });
         }
 
-        // টেলিগ্রাম চ্যানেলে অটো সিগন্যাল সেন্ড করার ফাংশন
         function sendAutoSignal() {
             const message = getFormattedMessage();
             const apiUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
