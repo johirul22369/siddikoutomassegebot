@@ -31,7 +31,6 @@
             width: 100%;
             height: 100vh;
             background: rgba(9, 13, 22, 0.96);
-            backdrop-filter: blur(8px);
             z-index: 99999;
             display: flex;
             align-items: center;
@@ -42,7 +41,7 @@
         .auth-card {
             width: 100%;
             max-width: 340px;
-            background: linear-gradient(160deg, #121826 0%, #090d16 100%);
+            background: #121826;
             border: 2.5px solid #ffd700;
             border-radius: 22px;
             padding: 24px;
@@ -51,7 +50,6 @@
             align-items: center;
             gap: 15px;
             box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
-            animation: popIn 0.3s ease-out;
         }
 
         .auth-avatar {
@@ -59,7 +57,6 @@
             height: 65px;
             border-radius: 50%;
             border: 2.5px solid #ffd700;
-            box-shadow: 0 0 15px #ffd700;
             overflow: hidden;
         }
 
@@ -75,7 +72,6 @@
             color: #ffd700;
             text-align: center;
             letter-spacing: 0.8px;
-            text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
         }
 
         .auth-subtitle {
@@ -105,7 +101,6 @@
 
         .auth-input:focus {
             border-color: #ffd700;
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
         }
 
         .auth-btn {
@@ -118,12 +113,6 @@
             font-size: 13.5px;
             font-weight: 900;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.5);
-            transition: transform 0.15s ease;
-        }
-
-        .auth-btn:active {
-            transform: scale(0.97);
         }
 
         .auth-error {
@@ -155,7 +144,7 @@
             border-radius: 50%;
             background: linear-gradient(135deg, #6d28d9, #ec4899);
             border: 2.5px solid #ffd700;
-            box-shadow: 0 0 18px #ffd700, 0 0 30px #ff3366;
+            box-shadow: 0 0 18px #ffd700;
             z-index: 9998;
             display: none;
             align-items: center;
@@ -163,7 +152,6 @@
             cursor: pointer;
             overflow: hidden;
             touch-action: none;
-            animation: pulseGlow 2s infinite alternate;
         }
 
         .floating-toggle-btn img {
@@ -171,11 +159,6 @@
             height: 100%;
             object-fit: cover;
             pointer-events: none;
-        }
-
-        @keyframes pulseGlow {
-            0% { transform: scale(1); box-shadow: 0 0 12px #ffd700, 0 0 22px #ff3366; }
-            100% { transform: scale(1.06); box-shadow: 0 0 20px #00ff88, 0 0 35px #00ffff; }
         }
 
         /* পপআপ ওভারলে */
@@ -194,17 +177,17 @@
             pointer-events: none;
         }
 
-        /* মেইন প্রিমিয়াম গোল্ডেন গ্লোয়িং কার্ড */
+        /* মেইন প্রিমিয়াম কার্ড (স্ক্রল ও ল্যাগ ফিক্সড) */
         .popup-card {
             position: absolute;
             width: 360px;
             max-width: 98vw;
             height: 580px;
             max-height: 95vh;
-            background: linear-gradient(160deg, #121826 0%, #090d16 100%);
+            background: #121826;
             border: 2px solid #ffd700;
             border-radius: 22px;
-            box-shadow: 0 0 25px rgba(255, 215, 0, 0.35), inset 0 0 15px rgba(255, 215, 0, 0.1);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
             overflow: hidden;
             display: flex;
             flex-direction: column;
@@ -212,14 +195,9 @@
             resize: both;
         }
 
-        @keyframes popIn {
-            from { opacity: 0; transform: scale(0.92); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
         /* পপআপ হেডার */
         .popup-header {
-            background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%);
+            background: #1e1b4b;
             padding: 10px 14px;
             display: flex;
             align-items: center;
@@ -240,7 +218,6 @@
             height: 38px;
             border-radius: 50%;
             border: 2px solid #ffd700;
-            box-shadow: 0 0 10px #ffd700;
             overflow: hidden;
         }
 
@@ -255,7 +232,6 @@
             font-weight: 900;
             color: #ffd700;
             letter-spacing: 0.8px;
-            text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
         }
 
         .brand-text span {
@@ -280,13 +256,14 @@
             pointer-events: auto;
         }
 
-        /* পপআপ বডি */
+        /* পপআপ বডি (স্মুথ স্ক্রলিং এনাবল করা হয়েছে) */
         .popup-body {
             padding: 12px 14px;
             display: flex;
             flex-direction: column;
             gap: 10px;
             overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
             flex-grow: 1;
             cursor: default;
         }
@@ -323,19 +300,18 @@
             font-weight: 800;
             cursor: pointer;
             text-align: center;
-            transition: all 0.2s ease;
+            transition: background 0.15s ease;
         }
 
         .market-btn.active-market {
-            background: linear-gradient(135deg, #7c3aed, #4c1d95);
+            background: #7c3aed;
             border-color: #ffd700;
             color: #ffffff;
-            box-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
         }
 
         /* স্টিকার প্যানেল (Win, Boom Shot, Loss) */
         .sticker-panel-box {
-            background: rgba(15, 23, 42, 0.9);
+            background: #0f172a;
             border: 1px solid #ffd700;
             border-radius: 10px;
             padding: 8px;
@@ -366,11 +342,9 @@
             align-items: center;
             gap: 3px;
             cursor: pointer;
-            transition: transform 0.15s ease, background 0.15s ease;
         }
 
         .sticker-card:active {
-            transform: scale(0.9);
             background: #7c3aed;
         }
 
@@ -385,7 +359,7 @@
             white-space: nowrap;
         }
 
-        /* পিরিয়ড ইনপুট ও লাইভ টাইমার (কড়া ইংলিশ ফন্ট ও ডিজিট নিশ্চিত করা) */
+        /* পিরিয়ড ইনপুট ও লাইভ টাইমার */
         .period-row {
             display: flex;
             gap: 8px;
@@ -411,7 +385,6 @@
 
         .input-box:focus {
             border-color: #ffd700;
-            box-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
         }
 
         .timer-badge {
@@ -445,21 +418,18 @@
             font-weight: 800;
             cursor: pointer;
             text-align: center;
-            transition: all 0.2s ease;
         }
 
         .opt-btn.active-small {
-            background: linear-gradient(135deg, #059669, #10b981);
+            background: #059669;
             border-color: #34d399;
             color: #ffffff;
-            box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
         }
 
         .opt-btn.active-big {
-            background: linear-gradient(135deg, #dc2626, #ef4444);
+            background: #dc2626;
             border-color: #f87171;
             color: #ffffff;
-            box-shadow: 0 0 10px rgba(239, 68, 68, 0.4);
         }
 
         /* কালার সিলেকশন */
@@ -479,28 +449,24 @@
             font-weight: 800;
             cursor: pointer;
             text-align: center;
-            transition: all 0.2s ease;
         }
 
         .color-btn.active-green {
             background: #10b981;
             border-color: #34d399;
             color: #fff;
-            box-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
         }
 
         .color-btn.active-red {
             background: #ef4444;
             border-color: #f87171;
             color: #fff;
-            box-shadow: 0 0 8px rgba(239, 68, 68, 0.5);
         }
 
         .color-btn.active-violet {
             background: #8b5cf6;
             border-color: #a78bfa;
             color: #fff;
-            box-shadow: 0 0 8px rgba(139, 92, 246, 0.5);
         }
 
         /* নাম্বার সিলেকশন গ্রিড */
@@ -522,12 +488,7 @@
             flex-direction: column;
             align-items: center;
             gap: 2px;
-            transition: transform 0.15s ease;
             font-family: 'Montserrat', sans-serif;
-        }
-
-        .num-btn:active {
-            transform: scale(0.92);
         }
 
         .num-red-violet { background: linear-gradient(135deg, #ef4444, #8b5cf6); color: #fff; border-color: #f43f5e; }
@@ -537,7 +498,6 @@
 
         .num-btn.active-num {
             border: 2.5px solid #ffd700 !important;
-            box-shadow: 0 0 12px #ffd700;
             transform: scale(1.05);
         }
 
@@ -576,14 +536,8 @@
             font-size: 14px;
             font-weight: 900;
             cursor: pointer;
-            box-shadow: 0 6px 18px rgba(245, 158, 11, 0.4);
             letter-spacing: 0.5px;
-            transition: transform 0.15s ease;
             flex-shrink: 0;
-        }
-
-        .send-btn:active {
-            transform: scale(0.98);
         }
 
         .status-alert {
@@ -654,7 +608,7 @@
                 <button class="minimize-btn" onclick="togglePopup(false)">✕</button>
             </div>
 
-            <!-- বডি -->
+            <!-- বডি (স্মুথ স্ক্রলিং সহ) -->
             <div class="popup-body">
                 
                 <!-- মার্কেট সিলেকশন (30S / 1M) -->
@@ -689,13 +643,13 @@
                     </div>
                 </div>
 
-                <!-- পিরিয়ড ইনপুট ও লাইভ টাইমার (ইংলিশ ডিজিট ফিক্সড) -->
+                <!-- পিরিয়ড ইনপুট ও লাইভ টাইমার (সঠিক 50000+ সিরিজ ফিক্সড) -->
                 <div class="control-group">
                     <div class="control-label">
                         <span>🎯 PERIOD (Live Sync):</span>
                     </div>
                     <div class="period-row">
-                        <input type="text" id="period-input" class="input-box" value="20261115100050509" oninput="updatePreview()">
+                        <input type="text" id="period-input" class="input-box" value="2026111550000" oninput="updatePreview()">
                         <div class="timer-badge">⏳ <span id="timer-display">30s</span></div>
                     </div>
                 </div>
@@ -766,7 +720,7 @@
     </div>
 
     <script>
-        const CORRECT_PASS = "SIDDIK786"; // সিক্রেট পাসওয়ার্ড
+        const CORRECT_PASS = "SIDDIK786";
 
         function verifyPassword() {
             const inputVal = document.getElementById('pass-input').value;
@@ -794,10 +748,10 @@
         let currentColor = 'GREEN';
         let currentColorEmoji = '🟢';
         let currentNumber = '1';
-        const chatId = "-1004478174913"; // তোর প্রাইভেট চ্যানেল আইডি[span_0](start_span)[span_0](end_span)
+        const chatId = "-1004478174913";[span_0](start_span)[span_0](end_span)
         const botToken = "9043785152:AAG37P5ZVgjVUw7l80RiJl2tUzl4MQokP1o";
 
-        // নিখুঁত ব্যাকগ্রাউন্ড সাইটের ফরম্যাট অনুযায়ী লাইভ পিরিয়ড ও কাউন্টডাউন টাইমার ইঞ্জিন
+        // ব্যাকগ্রাউন্ড সাইটের আসল ফরম্যাট (50000+ সিরিজ) অনুযায়ী লাইভ পিরিয়ড ও কাউন্টডাউন টাইমার
         function startLiveTimer() {
             setInterval(() => {
                 const now = new Date();
@@ -812,11 +766,11 @@
                 if (currentMarket === '30S') {
                     secondsLeft = 30 - (totalSeconds % 30);
                     const total30s = Math.floor(now.getTime() / 30000);
-                    periodVal = `${dateStr}1000${String(total30s).slice(-5)}`;
+                    periodVal = `${dateStr}50000${String(total30s).slice(-4)}`;
                 } else {
                     secondsLeft = 60 - (totalSeconds % 60);
                     const total60s = Math.floor(now.getTime() / 60000);
-                    periodVal = `${dateStr}1000${String(total60s).slice(-5)}`;
+                    periodVal = `${dateStr}100000${String(total60s).slice(-4)}`;
                 }
 
                 const periodInput = document.getElementById('period-input');
@@ -965,7 +919,7 @@
         }
 
         function getFormattedMessage() {
-            const period = document.getElementById('period-input').value || '20261115100050509';
+            const period = document.getElementById('period-input').value || '2026111550000';
             const referralLink = "https://hgnice0.com/#/register?invitationCode=376851951983";
             const wingoTime = currentMarket === '30S' ? '𝟯𝟬𝗦' : '𝟲𝟬𝗦';
 
@@ -976,19 +930,14 @@
             document.getElementById('signal-preview').innerText = getFormattedMessage();
         }
 
-        // ইমোজি ও লেখা একসাথে পাঠানোর ফাংশন
         function sendStickerEmoji(messageText) {
             const apiUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
-
             showStatus("⏳ পাঠানো হচ্ছে...", "#38bdf8", "rgba(56, 189, 248, 0.12)");
 
             fetch(apiUrl, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    chat_id: chatId,
-                    text: messageText
-                })
+                body: JSON.stringify({ chat_id: chatId, text: messageText })
             })
             .then(res => res.json())
             .then(data => {
@@ -1003,23 +952,15 @@
             });
         }
 
-        // চ্যানেলে অটো সিগন্যাল সেন্ড করার বাটন ফাংশন
         function sendAutoSignal() {
             const message = getFormattedMessage();
             const apiUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
-
             showStatus("⏳ চ্যানেলে সিগন্যাল পাঠানো হচ্ছে...", "#38bdf8", "rgba(56, 189, 248, 0.12)");
 
             fetch(apiUrl, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    chat_id: chatId,
-                    text: message,
-                    parse_mode: 'Markdown'
-                })
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ chat_id: chatId, text: message, parse_mode: 'Markdown' })
             })
             .then(res => res.json())
             .then(data => {
@@ -1030,7 +971,7 @@
                 }
             })
             .catch(() => {
-                showStatus("❌ নেটওয়ার্ক সমস্যা! আবার চেষ্টা করুন।", "#f87171", "rgba(248, 113, 113, 0.12)");
+                showStatus("❌ নেটওয়ার্ক সমস্যা!", "#f87171", "rgba(248, 113, 113, 0.12)");
             });
         }
 
