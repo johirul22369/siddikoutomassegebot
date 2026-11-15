@@ -193,12 +193,13 @@
             pointer-events: none;
         }
 
-        /* মেইন প্রিমিয়াম গোল্ডেন গ্লোয়িং কার্ড (ল্যাগ এবং ফাইল হ্যান্ডেল সমস্যা সম্পূর্ণ ফিক্সড) */
+        /* মেইন প্রিমিয়াম গোল্ডেন গ্লোয়িং কার্ড (ছোট-বড় করার রিসাইজ অপশনসহ) */
         .popup-card {
             position: absolute;
             width: 360px;
-            max-width: 95vw;
-            max-height: 92vh;
+            max-width: 98vw;
+            height: 580px;
+            max-height: 95vh;
             background: linear-gradient(160deg, #121826 0%, #090d16 100%);
             border: 2px solid #ffd700;
             border-radius: 22px;
@@ -207,6 +208,7 @@
             display: flex;
             flex-direction: column;
             pointer-events: auto;
+            resize: both; /* পপআপ ছোট-বড় করার জন্য */
         }
 
         @keyframes popIn {
@@ -388,7 +390,7 @@
             white-space: nowrap;
         }
 
-        /* পিরিয়ড ইনপুট ও লাইভ টাইমার (ইংলিশ ডিজিট নিশ্চিত করা হয়েছে) */
+        /* পিরিয়ড ইনপুট ও লাইভ টাইমার (ইংলিশ ডিজিট) */
         .period-row {
             display: flex;
             gap: 8px;
@@ -818,7 +820,7 @@
         const chatId = "-1004478174913"; // তোর প্রাইভেট চ্যানেল আইডি[span_0](start_span)[span_0](end_span)
         const botToken = "9043785152:AAG37P5ZVgjVUw7l80RiJl2tUzl4MQokP1o";
 
-        // লাইভ পিরিয়ড ও কাউন্টডাউন টাইমার ইঞ্জিন (ইংলিশ ডিজিট নিশ্চিত করা হয়েছে)
+        // লাইভ পিরিয়ড ও কাউন্টডাউন টাইমার ইঞ্জিন (ইংলিশ ডিজিট)
         function startLiveTimer() {
             setInterval(() => {
                 const now = new Date();
@@ -894,7 +896,7 @@
             }
         });
 
-        // পপআপ উইন্ডো ড্র্যাগিং লজিক (ল্যাগ ফিক্সড)
+        // পপআপ উইন্ডো ড্র্যাগিং লজিক
         const popupCard = document.getElementById('popup-card');
         const popupHeader = document.getElementById('popup-header');
         let isPopupDragging = false;
