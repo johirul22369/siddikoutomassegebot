@@ -100,6 +100,7 @@
             letter-spacing: 2px;
             user-select: text;
             -webkit-user-select: text;
+            font-family: 'Montserrat', sans-serif !important;
         }
 
         .auth-input:focus {
@@ -357,7 +358,7 @@
 
         .sticker-card {
             background: #1e293b;
-            border: 1.5px solid #475569;
+            border: 1px solid #475569;
             border-radius: 8px;
             padding: 6px 8px;
             display: flex;
@@ -384,7 +385,7 @@
             white-space: nowrap;
         }
 
-        /* পিরিয়ড ইনপুট ও লাইভ টাইমার (ইংলিশ ডিজিট) */
+        /* পিরিয়ড ইনপুট ও লাইভ টাইমার (কড়া ইংলিশ ফন্ট ও ডিজিট নিশ্চিত করা) */
         .period-row {
             display: flex;
             gap: 8px;
@@ -404,7 +405,7 @@
             -webkit-user-select: text;
             direction: ltr;
             text-align: left;
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Montserrat', sans-serif !important;
             cursor: text;
         }
 
@@ -424,7 +425,7 @@
             color: #38bdf8;
             font-size: 13px;
             font-weight: 800;
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Montserrat', sans-serif !important;
         }
 
         /* অ্যাকশন সিলেকশন গ্রিড (SMALL / BIG) */
@@ -688,13 +689,13 @@
                     </div>
                 </div>
 
-                <!-- পিরিয়ড ইনপুট ও লাইভ টাইমার (ইংলিশ ডিজিট) -->
+                <!-- পিরিয়ড ইনপুট ও লাইভ টাইমার (ইংলিশ ডিজিট ফিক্সড) -->
                 <div class="control-group">
                     <div class="control-label">
                         <span>🎯 PERIOD (Live Sync):</span>
                     </div>
                     <div class="period-row">
-                        <input type="number" id="period-input" class="input-box" value="50360" oninput="updatePreview()">
+                        <input type="text" id="period-input" class="input-box" value="20261115100050509" oninput="updatePreview()">
                         <div class="timer-badge">⏳ <span id="timer-display">30s</span></div>
                     </div>
                 </div>
@@ -793,23 +794,29 @@
         let currentColor = 'GREEN';
         let currentColorEmoji = '🟢';
         let currentNumber = '1';
-        const chatId = "-1004478174913"; // তোর প্রাইভেট চ্যানেল আইডি
+        const chatId = "-1004478174913"; // তোর প্রাইভেট চ্যানেল আইডি[span_0](start_span)[span_0](end_span)
         const botToken = "9043785152:AAG37P5ZVgjVUw7l80RiJl2tUzl4MQokP1o";
 
-        // নিখুঁত লাইভ পিরিয়ড ও কাউন্টডাউন টাইমার ইঞ্জিন (ইংলিশ ডিজিট নিশ্চিত করা)
+        // নিখুঁত ব্যাকগ্রাউন্ড সাইটের ফরম্যাট অনুযায়ী লাইভ পিরিয়ড ও কাউন্টডাউন টাইমার ইঞ্জিন
         function startLiveTimer() {
             setInterval(() => {
                 const now = new Date();
+                const year = now.getFullYear();
+                const month = String(now.getMonth() + 1).padStart(2, '0');
+                const day = String(now.getDate()).padStart(2, '0');
+                const dateStr = `${year}${month}${day}`;
+
                 const totalSeconds = Math.floor(now.getTime() / 1000);
-                
                 let periodVal, secondsLeft;
 
                 if (currentMarket === '30S') {
                     secondsLeft = 30 - (totalSeconds % 30);
-                    periodVal = Math.floor(totalSeconds / 30) + 50000;
+                    const total30s = Math.floor(now.getTime() / 30000);
+                    periodVal = `${dateStr}1000${String(total30s).slice(-5)}`;
                 } else {
                     secondsLeft = 60 - (totalSeconds % 60);
-                    periodVal = Math.floor(totalSeconds / 60) + 80000;
+                    const total60s = Math.floor(now.getTime() / 60000);
+                    periodVal = `${dateStr}1000${String(total60s).slice(-5)}`;
                 }
 
                 const periodInput = document.getElementById('period-input');
@@ -958,7 +965,7 @@
         }
 
         function getFormattedMessage() {
-            const period = document.getElementById('period-input').value || '50360';
+            const period = document.getElementById('period-input').value || '20261115100050509';
             const referralLink = "https://hgnice0.com/#/register?invitationCode=376851951983";
             const wingoTime = currentMarket === '30S' ? '𝟯𝟬𝗦' : '𝟲𝟬𝗦';
 
