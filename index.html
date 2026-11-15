@@ -65,15 +65,14 @@
             100% { transform: scale(1.06); box-shadow: 0 0 20px #00ff88, 0 0 35px #00ffff; }
         }
 
-        /* পপআপ ওভারলে */
+        /* পপআপ ওভারলে - ব্যাকগ্রাউন্ডে টাচ সচল রাখতে */
         .popup-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100vh;
-            background: rgba(9, 13, 22, 0.45);
-            backdrop-filter: blur(4px);
+            background: transparent;
             z-index: 9999;
             display: flex;
             align-items: center;
@@ -187,33 +186,48 @@
             align-items: center;
         }
 
-        /* স্টিকার প্যাক শর্টকাট বার */
-        .sticker-pack-box {
-            background: rgba(15, 23, 42, 0.8);
-            border: 1px solid #334155;
-            border-radius: 9px;
+        /* স্টিকার বাটন প্যানেল (অ্যাপের ভেতর থেকে এক ক্লিকে স্টিকার পাঠানোর জন্য) */
+        .sticker-panel-box {
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid #ffd700;
+            border-radius: 10px;
             padding: 8px;
             display: flex;
-            align-items: center;
-            justify-content: space-between;
+            flex-direction: column;
+            gap: 6px;
         }
 
-        .sticker-info {
+        .sticker-title {
             font-size: 11.5px;
-            color: #38bdf8;
-            font-weight: 700;
+            color: #ffd700;
+            font-weight: 800;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .sticker-link-btn {
-            background: #4c1d95;
+        .sticker-btns-row {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            padding-bottom: 3px;
+        }
+
+        .sticker-send-btn {
+            background: #1e293b;
+            border: 1px solid #475569;
+            border-radius: 7px;
+            padding: 6px 10px;
+            font-size: 13px;
             color: #fff;
-            border: 1px solid #8b5cf6;
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 11px;
-            font-weight: 700;
-            text-decoration: none;
             cursor: pointer;
+            white-space: nowrap;
+            transition: transform 0.15s ease, background 0.15s ease;
+        }
+
+        .sticker-send-btn:active {
+            transform: scale(0.9);
+            background: #7c3aed;
         }
 
         /* পিরিয়ড ইনপুট ও টাইমার রো */
@@ -379,10 +393,18 @@
             <!-- বডি -->
             <div class="popup-body">
                 
-                <!-- স্টিকার প্যাক শর্টকাট প্যানেল -->
-                <div class="sticker-pack-box">
-                    <span class="sticker-info">🎁 Patowari Short Pack</span>
-                    <a href="https://t.me/addstickers/PatowariShort" target="_blank" class="sticker-link-btn">প্যাক অ্যাড করুন</a>
+                <!-- প্যানেল থেকে সরাসরি স্টিকার / ইমোজি পাঠানোর শর্টকাট -->
+                <div class="sticker-panel-box">
+                    <div class="sticker-title">
+                        <span>✨ Patowari Short Stacker (Direct Send)</span>
+                    </div>
+                    <div class="sticker-btns-row">
+                        <button type="button" class="sticker-send-btn" onclick="sendStickerEmoji('🔥')">🔥 Patowari</button>
+                        <button type="button" class="sticker-send-btn" onclick="sendStickerEmoji('💎')">💎 VIP</button>
+                        <button type="button" class="sticker-send-btn" onclick="sendStickerEmoji('🚀')">🚀 Rocket</button>
+                        <button type="button" class="sticker-send-btn" onclick="sendStickerEmoji('👑')">👑 King</button>
+                        <button type="button" class="sticker-send-btn" onclick="sendStickerEmoji('🎯')">🎯 Target</button>
+                    </div>
                 </div>
 
                 <!-- পিরিয়ড ইনপুট -->
@@ -431,6 +453,8 @@
 
     <script>
         let currentAction = 'SMALL';
+        const chatId = "-1004478174913"; // তোর প্রাইভেট চ্যানেল আইডি[span_0](start_span)[span_0](end_span)
+        const botToken = "9043785152:AAG37P5ZVgjVUw7l80RiJl2tUzl4MQokP1o";
 
         // পপআপ ওপেন / মিনিমাইজ
         function togglePopup(show) {
@@ -466,8 +490,6 @@
             const period = document.getElementById('period-input').value || '50360';
             const referralLink = "https://hgnice0.com/#/register?invitationCode=376851951983";
 
-            // টেলিগ্রাম MarkdownV2 বা HTML লিংক হাইড ফরম্যাট: [DIRECT WEB ENTRY](url)
-            // এতে চ্যানেলে শুধু 'DIRECT WEB ENTRY' লেখাই দেখাবে, কিন্তু ক্লিক করলে লিংকে চলে যাবে।
             return `🔥 𝗦𝗠𝗔𝗟𝗟 𝗦𝗜𝗚𝗡𝗔𝗟 🔥\n▱▱▱▱▱▱▱▱▱▱▱▱▱▱\n💎 𝐏𝐄𝐑𝐈𝐎𝐃 ➤ 📅 ${period}\n🎯 𝐀𝐂𝐓𝐈𝐎𝐍 ➤ 𝐁𝐄𝐓 ${currentAction}\n⚡ 𝐖𝐈𝐍𝐆𝐎 ➤ 𝟯𝟬𝗦 ⏱️\n▱▱▱▱▱▱▱▱▱▱▱▱▱▱\n🔗 [𝗗𝗜𝗥𝗘𝗖𝗧 𝗪𝗘𝗕 𝗘𝗡𝗧𝗥𝗬](${referralLink})`;
         }
 
@@ -481,13 +503,38 @@
             updatePreview();
         };
 
-        // টেলিগ্রাম চ্যানেলে অটো সিগন্যাল সেন্ড করার ফাংশন (Markdown মোড সহ)
+        // প্যানেল থেকে এক ক্লিকে চ্যানেলে স্টিকার স্টাইলের ইমোজি/মেসেজ পাঠানোর ফাংশন
+        function sendStickerEmoji(emojiSymbol) {
+            const stickerText = `${emojiSymbol} Patowari Short Signal Badge ${emojiSymbol}`;
+            const apiUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
+
+            showStatus("⏳ স্টিকার সিগন্যাল পাঠানো হচ্ছে...", "#38bdf8", "rgba(56, 189, 248, 0.12)");
+
+            fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: stickerText
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.ok) {
+                    showStatus("✅ স্টিকার সফলভাবে সেন্ড হয়েছে!", "#22c55e", "rgba(34, 197, 94, 0.12)");
+                } else {
+                    showStatus("❌ এরর: " + (data.description || "বট অ্যাডমিন আছে তো?"), "#f87171", "rgba(248, 113, 113, 0.12)");
+                }
+            })
+            .catch(() => {
+                showStatus("❌ নেটওয়ার্ক সমস্যা!", "#f87171", "rgba(248, 113, 113, 0.12)");
+            });
+        }
+
+        // টেলিগ্রাম চ্যানেলে অটো সিগন্যাল সেন্ড করার ফাংশন
         function sendAutoSignal() {
             const message = getFormattedMessage();
-            const chatId = "-1004478174913"; // প্রাইভেট চ্যানেল আইডি[span_0](start_span)[span_0](end_span)
-            const botToken = "9043785152:AAG37P5ZVgjVUw7l80RiJl2tUzl4MQokP1o";
             const apiUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
-            const statusAlert = document.getElementById('status-alert');
 
             showStatus("⏳ চ্যানেলে সিগন্যাল পাঠানো হচ্ছে...", "#38bdf8", "rgba(56, 189, 248, 0.12)");
 
@@ -499,7 +546,7 @@
                 body: JSON.stringify({
                     chat_id: chatId,
                     text: message,
-                    parse_mode: 'Markdown' // লিংক হাইড ও সুন্দর ফরম্যাটের জন্য
+                    parse_mode: 'Markdown'
                 })
             })
             .then(res => res.json())
