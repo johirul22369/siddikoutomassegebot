@@ -193,22 +193,20 @@
             pointer-events: none;
         }
 
-        /* মেইন প্রিমিয়াম গোল্ডেন গ্লোয়িং কার্ড (এখন ছোট-বড় ও রিসাইজ করা যাবে) */
+        /* মেইন প্রিমিয়াম গোল্ডেন গ্লোয়িং কার্ড (ল্যাগ এবং ফাইল হ্যান্ডেল সমস্যা সম্পূর্ণ ফিক্সড) */
         .popup-card {
             position: absolute;
             width: 360px;
             max-width: 95vw;
-            height: 580px;
             max-height: 92vh;
             background: linear-gradient(160deg, #121826 0%, #090d16 100%);
             border: 2px solid #ffd700;
             border-radius: 22px;
             box-shadow: 0 0 25px rgba(255, 215, 0, 0.35), inset 0 0 15px rgba(255, 215, 0, 0.1);
-            overflow: hidden; /* রিসাইজ স্মুথ রাখার জন্য */
+            overflow: hidden;
             display: flex;
             flex-direction: column;
             pointer-events: auto;
-            resize: both; /* পপআপ উইন্ডো ছোট-বড় করার সুবিধা */
         }
 
         @keyframes popIn {
@@ -226,6 +224,7 @@
             border-bottom: 1.5px solid rgba(255, 215, 0, 0.3);
             cursor: grab;
             flex-shrink: 0;
+            touch-action: none;
         }
 
         .popup-header:active {
@@ -236,6 +235,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            pointer-events: none;
         }
 
         .brand-avatar {
@@ -282,7 +282,7 @@
             justify-content: center;
         }
 
-        /* পপআপ বডি (스크롤যোগ্য) */
+        /* পপআপ বডি */
         .popup-body {
             padding: 12px 14px;
             display: flex;
@@ -388,7 +388,7 @@
             white-space: nowrap;
         }
 
-        /* পিরিয়ড ইনপুট ও লাইভ টাইমার */
+        /* পিরিয়ড ইনপুট ও লাইভ টাইমার (ইংলিশ ডিজিট নিশ্চিত করা হয়েছে) */
         .period-row {
             display: flex;
             gap: 8px;
@@ -406,6 +406,9 @@
             outline: none;
             user-select: text;
             -webkit-user-select: text;
+            direction: ltr;
+            text-align: left;
+            font-family: 'Montserrat', sans-serif;
         }
 
         .input-box:focus {
@@ -424,6 +427,7 @@
             color: #38bdf8;
             font-size: 13px;
             font-weight: 800;
+            font-family: 'Montserrat', sans-serif;
         }
 
         /* অ্যাকশন সিলেকশন গ্রিড */
@@ -521,6 +525,7 @@
             align-items: center;
             gap: 2px;
             transition: transform 0.15s ease;
+            font-family: 'Montserrat', sans-serif;
         }
 
         .num-btn:active {
@@ -542,6 +547,7 @@
             font-size: 8.5px;
             font-weight: 700;
             opacity: 0.9;
+            font-family: 'SolaimanLipi', sans-serif;
         }
 
         /* সিগন্যাল প্রিভিউ বক্স */
@@ -704,7 +710,7 @@
                     </div>
                 </div>
 
-                <!-- পিরিয়ড ইনপুট ও লাইভ টাইমার -->
+                <!-- পিরিয়ড ইনপুট ও লাইভ টাইমার (ইংলিশ ডিজিট) -->
                 <div class="control-group">
                     <div class="control-label">
                         <span>🎯 PERIOD (Live Sync):</span>
@@ -767,7 +773,7 @@
 
             </div>
 
-            <!-- অটো সেন্ড বাটন ও স্ট্যাটাস (ফিক্সড ফুটার অংশ) -->
+            <!-- অটো সেন্ড বাটন ও স্ট্যাটাস ফুটার -->
             <div style="padding: 10px 14px; background: #0c121d; border-top: 1px solid rgba(255,215,0,0.2); display: flex; flex-direction: column; gap: 8px; flex-shrink: 0;">
                 <button class="send-btn" onclick="sendAutoSignal()">চ্যানেলে অটো সেন্ড করুন 🚀</button>
                 <div id="status-alert" class="status-alert"></div>
@@ -812,7 +818,7 @@
         const chatId = "-1004478174913"; // তোর প্রাইভেট চ্যানেল আইডি[span_0](start_span)[span_0](end_span)
         const botToken = "9043785152:AAG37P5ZVgjVUw7l80RiJl2tUzl4MQokP1o";
 
-        // লাইভ পিরিয়ড ও কাউন্টডাউন টাইমার ইঞ্জিন
+        // লাইভ পিরিয়ড ও কাউন্টডাউন টাইমার ইঞ্জিন (ইংলিশ ডিজিট নিশ্চিত করা হয়েছে)
         function startLiveTimer() {
             setInterval(() => {
                 const now = new Date();
@@ -888,7 +894,7 @@
             }
         });
 
-        // পপআপ উইন্ডো ড্র্যাগিং লজিক
+        // পপআপ উইন্ডো ড্র্যাগিং লজিক (ল্যাগ ফিক্সড)
         const popupCard = document.getElementById('popup-card');
         const popupHeader = document.getElementById('popup-header');
         let isPopupDragging = false;
@@ -907,7 +913,7 @@
             if (e.buttons === 0) return;
             const dx = e.clientX - pStartX;
             const dy = e.clientY - pStartY;
-            if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
+            if (Math.abs(dx) > 3 || Math.abs(dy) > 3) {
                 isPopupDragging = true;
             }
             if (isPopupDragging) {
