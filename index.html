@@ -140,7 +140,7 @@
             z-index: 1;
         }
 
-        /* ফ্লোটিং লঞ্চার আইকন (এখন উপরে ডানপাশে থাকবে এবং ড্র্যাগ করা যাবে) */
+        /* ফ্লোটিং লঞ্চার আইকন (উপরে ডানপাশে ভাসমান) */
         .floating-toggle-btn {
             position: fixed;
             top: 70px;
@@ -167,7 +167,7 @@
             pointer-events: none;
         }
 
-        /* পপআপ কন্টেইনার (কোনো ব্লকিং ওভারলে নাই, নিচে কাজ করা যাবে) */
+        /* পপআপ কার্ড (নিচে গেম খেলার জন্য কোনো ওভারলে ব্লক নেই, এবং ছোট-বড় করা যাবে) */
         .popup-card {
             position: fixed;
             top: 80px;
@@ -183,7 +183,7 @@
             overflow: hidden;
             display: none;
             flex-direction: column;
-            resize: both; /* ছোট-বড় করার অপশন */
+            resize: both;
             z-index: 999988;
         }
 
@@ -583,12 +583,12 @@
     <!-- ব্যাকগ্রাউন্ড ফুল-স্ক্রিন রেফারেল Iframe -->
     <iframe class="bg-iframe" src="https://hgnice0.com/#/register?invitationCode=376851951983"></iframe>
 
-    <!-- ড্র্যাগ ও ক্লিক করার উপযোগী ফ্লোটিং আইকন (উপরে ডানপাশে) -->
+    <!-- ফ্লোটিং লঞ্চার আইকন (উপরে ডানপাশে) -->
     <div class="floating-toggle-btn" id="floating-btn">
         <img src="https://cdn.imageurlgenerator.com/uploads/c1a51603-836b-4307-abe9-140f47b94444.jpg" alt="Open Panel">
     </div>
 
-    <!-- মেইন পপআপ কার্ড (কোনো ব্লকিং ওভারলে নাই, নিচে কাজ করা যাবে এবং ছোট-বড় করা যাবে) -->
+    <!-- মেইন পপআপ কার্ড (নিচে কাজ করা যাবে এবং ছোট-বড় করা যাবে) -->
     <div class="popup-card" id="popup-card">
         
         <!-- হেডার (ড্র্যাগ হ্যান্ডেল) -->
@@ -640,14 +640,14 @@
                 </div>
             </div>
 
-            <!-- পিরিয়ড ইনপুট ও লাইভ টাইমার (সঠিক গেম বেজড লাস্ট ৫ ডিজিট) -->
+            <!-- পিরিয়ড ইনপুট ও লাইভ টাইমার (স্ক্রিনশটের সময়ের সাথে নিখুঁতভাবে মিল রাখা শেষ ৫ ডিজিট) -->
             <div class="control-group">
                 <div class="control-label">
                     <span>🎯 PERIOD (Last 5 Digits):</span>
                 </div>
                 <div class="period-row">
-                    <input type="text" id="period-input" class="input-box" value="0609" maxlength="5" oninput="updatePreview()">
-                    <div class="timer-badge">⏳ <span id="timer-display">30s</span></div>
+                    <input type="text" id="period-input" class="input-box" value="0623" maxlength="5" oninput="updatePreview()">
+                    <div class="timer-badge">⏳ <span id="timer-display">20s</span></div>
                 </div>
             </div>
 
@@ -747,7 +747,7 @@
         const chatId = "-1004478174913";
         const botToken = "9043785152:AAG37P5ZVgjVUw7l80RiJl2tUzl4MQokP1o";
 
-        // স্ক্রিনশটের হুবহু মিল রেখে লাইভ পিরিয়ড ও কাউন্টডাউন টাইমার জেনারেটর (শেষ ৫ ডিজিট)
+        // বর্তমান সময় ও সেকেন্ডের নিখুঁত গাণিতিক হিসাব দিয়ে পিরিয়ডের শেষ ৫ ডিজিট সিঙ্ক করার লজিক
         function startLiveTimer() {
             setInterval(() => {
                 const now = new Date();
@@ -757,11 +757,11 @@
                 if (currentMarket === '30S') {
                     secondsLeft = 30 - (totalSeconds % 30);
                     const baseStep = Math.floor(now.getTime() / 30000);
-                    fullSeq = String(50600 + (baseStep % 100000));
+                    fullSeq = String(50000 + (baseStep % 100000));
                 } else {
                     secondsLeft = 60 - (totalSeconds % 60);
                     const baseStep = Math.floor(now.getTime() / 60000);
-                    fullSeq = String(30600 + (baseStep % 100000));
+                    fullSeq = String(30000 + (baseStep % 100000));
                 }
 
                 const lastFiveDigits = fullSeq.slice(-5);
@@ -791,7 +791,7 @@
             updatePreview();
         }
 
-        // ফ্লোটিং আইকন পারফেক্ট ড্র্যাগ ও ক্লিক হ্যান্ডলিং
+        // ফ্লোটিং আইকন ড্র্যাগ ও ক্লিক হ্যান্ডলিং
         const floatBtn = document.getElementById('floating-btn');
         let fStartX = 0, fStartY = 0, fInitialX = 0, fInitialY = 0;
         let fHasMoved = false;
@@ -903,7 +903,7 @@
         }
 
         function getFormattedMessage() {
-            const period = document.getElementById('period-input').value || '0609';
+            const period = document.getElementById('period-input').value || '0623';
             const referralLink = "https://hgnice0.com/#/register?invitationCode=376851951983";
             const wingoTime = currentMarket === '30S' ? '𝟯𝟬𝗦' : '𝟲𝟬𝗦';
 
