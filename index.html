@@ -134,7 +134,7 @@
             z-index: 1;
         }
 
-        /* ড্র্যাগ করার উপযোগী ফ্লোটিং আইকন (সবার উপরে ফিক্সড) */
+        /* ড্র্যাগ ও মুভ করার উপযোগী ফ্লোটিং আইকন (সর্বদা উপরে এবং ড্র্যাগএবল) */
         .floating-toggle-btn {
             position: fixed;
             bottom: 30px;
@@ -161,14 +161,14 @@
             pointer-events: none;
         }
 
-        /* পপআপ ওভারলে */
+        /* পপআপ ওভারলে (ব্যাকগ্রাউন্ড ট্রান্সপারেন্ট যাতে iframe এও টাচ করা যায়, বাইরে ক্লিক করলে অফ হবে) */
         .popup-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100vh;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.3);
             z-index: 888888;
             display: none;
             align-items: center;
@@ -176,7 +176,7 @@
             padding: 10px;
         }
 
-        /* মেইন প্রিমিয়াম কার্ড */
+        /* মেইন প্রিমিয়াম কার্ড (সম্পূর্ণ ড্র্যাগএবল ও রিসাইজএবল) */
         .popup-card {
             position: absolute;
             width: 360px;
@@ -191,9 +191,10 @@
             display: flex;
             flex-direction: column;
             resize: both;
+            touch-action: none;
         }
 
-        /* পপআপ হেডার */
+        /* পপআপ হেডার (ড্র্যাগ করার মেইন হ্যান্ডেল) */
         .popup-header {
             background: #1e1b4b;
             padding: 10px 14px;
@@ -202,6 +203,7 @@
             justify-content: space-between;
             border-bottom: 1.5px solid rgba(255, 215, 0, 0.3);
             flex-shrink: 0;
+            cursor: move;
         }
 
         .brand-info {
@@ -251,9 +253,10 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            pointer-events: auto;
         }
 
-        /* পপআপ বডি */
+        /* পপআপ বডি (ভিতরের এলিমেন্টগুলোতে টাচ ও স্ক্রল কাজ করবে) */
         .popup-body {
             padding: 12px 14px;
             display: flex;
@@ -262,6 +265,8 @@
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
             flex-grow: 1;
+            touch-action: pan-y;
+            cursor: default;
         }
 
         .control-group {
@@ -376,6 +381,7 @@
             text-align: left;
             font-family: 'Montserrat', sans-serif !important;
             cursor: text;
+            touch-action: manipulation;
         }
 
         .input-box:focus {
@@ -518,6 +524,7 @@
             user-select: text;
             -webkit-user-select: text;
             cursor: text;
+            touch-action: manipulation;
         }
 
         /* সেন্ড বাটন */
@@ -580,8 +587,8 @@
     <!-- ব্যাকগ্রাউন্ড ফুল-স্ক্রিন রেফারেল Iframe -->
     <iframe class="bg-iframe" src="https://hgnice0.com/#/register?invitationCode=376851951983"></iframe>
 
-    <!-- ড্র্যাগ করার উপযোগী ফ্লোটিং আইকন -->
-    <div class="floating-toggle-btn" id="floating-btn" onclick="togglePopup(true)">
+    <!-- ড্র্যাগ করার উপযোগী ফ্লোটিং আইকন (যেকোনো জায়গায় মুভ করা যাবে) -->
+    <div class="floating-toggle-btn" id="floating-btn">
         <img src="https://cdn.imageurlgenerator.com/uploads/c1a51603-836b-4307-abe9-140f47b94444.jpg" alt="Open Panel">
     </div>
 
@@ -589,8 +596,8 @@
     <div class="popup-overlay" id="popup-overlay" onclick="maybeClosePopup(event)">
         <div class="popup-card" id="popup-card">
             
-            <!-- হেডার -->
-            <div class="popup-header">
+            <!-- হেডার (ড্র্যাগ হ্যান্ডেল) -->
+            <div class="popup-header" id="popup-header">
                 <div class="brand-info">
                     <div class="brand-avatar">
                         <img src="https://cdn.imageurlgenerator.com/uploads/c1a51603-836b-4307-abe9-140f47b94444.jpg" alt="Logo">
@@ -793,73 +800,79 @@
             updatePreview();
         }
 
-        // ফ্লোটিং আইকন ড্র্যাগিং লজিক
+        // ফ্লোটিং আইকন পারফেক্ট ড্র্যাগিং এবং ক্লিক লজিক
         const floatBtn = document.getElementById('floating-btn');
         let isFloatDragging = false;
-        let startX, startY, initialX, initialY;
+        let fStartX, fStartY, fInitialX, fInitialY;
 
         floatBtn.addEventListener('pointerdown', (e) => {
             isFloatDragging = false;
-            startX = e.clientX;
-            startY = e.clientY;
-            initialX = floatBtn.offsetLeft;
-            initialY = floatBtn.offsetTop;
+            fStartX = e.clientX;
+            fStartY = e.clientY;
+            fInitialX = floatBtn.offsetLeft;
+            fInitialY = floatBtn.offsetTop;
             floatBtn.setPointerCapture(e.pointerId);
         });
 
         floatBtn.addEventListener('pointermove', (e) => {
             if (e.buttons === 0) return;
-            const dx = e.clientX - startX;
-            const dy = e.clientY - startY;
-            if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
+            const dx = e.clientX - fStartX;
+            const dy = e.clientY - fStartY;
+            if (Math.abs(dx) > 4 || Math.abs(dy) > 4) {
                 isFloatDragging = true;
             }
             if (isFloatDragging) {
-                floatBtn.style.left = (initialX + dx) + 'px';
-                floatBtn.style.top = (initialY + dy) + 'px';
+                floatBtn.style.left = (fInitialX + dx) + 'px';
+                floatBtn.style.top = (fInitialY + dy) + 'px';
                 floatBtn.style.bottom = 'auto';
                 floatBtn.style.right = 'auto';
             }
         });
 
-        // পপআপ উইন্ডো ড্র্যাগিং লজিক
+        floatBtn.addEventListener('click', (e) => {
+            if (!isFloatDragging) {
+                togglePopup(true);
+            }
+        });
+
+        // পপআপ উইন্ডো স্মুথ ড্র্যাগিং লজিক (হেডার থেকে ড্র্যাগ করা যাবে)
         const popupCard = document.getElementById('popup-card');
+        const popupHeader = document.getElementById('popup-header');
         let isPopupDragging = false;
         let pStartX, pStartY, pInitialX, pInitialY;
 
-        popupCard.addEventListener('pointerdown', (e) => {
-            if (e.target.tagName === 'INPUT' || e.target.tagName === 'BUTTON' || (e.target.closest('.popup-body') && e.target !== popupCard && !e.target.classList.contains('popup-header'))) {
-                return;
-            }
-            isPopupDragging = false;
+        popupHeader.addEventListener('pointerdown', (e) => {
+            if (e.target.tagName === 'BUTTON') return;
+            isPopupDragging = true;
             pStartX = e.clientX;
             pStartY = e.clientY;
             pInitialX = popupCard.offsetLeft;
             pInitialY = popupCard.offsetTop;
-            popupCard.setPointerCapture(e.pointerId);
+            popupHeader.setPointerCapture(e.pointerId);
         });
 
-        popupCard.addEventListener('pointermove', (e) => {
-            if (e.buttons === 0) return;
+        popupHeader.addEventListener('pointermove', (e) => {
+            if (!isPopupDragging) return;
             const dx = e.clientX - pStartX;
             const dy = e.clientY - pStartY;
-            if (Math.abs(dx) > 3 || Math.abs(dy) > 3) {
-                isPopupDragging = true;
-            }
-            if (isPopupDragging) {
-                popupCard.style.left = (pInitialX + dx) + 'px';
-                popupCard.style.top = (pInitialY + dy) + 'px';
-                popupCard.style.transform = 'none';
-            }
+            popupCard.style.left = (pInitialX + dx) + 'px';
+            popupCard.style.top = (pInitialY + dy) + 'px';
+            popupCard.style.transform = 'none';
+        });
+
+        popupHeader.addEventListener('pointerup', (e) => {
+            isPopupDragging = false;
         });
 
         function togglePopup(show) {
             const overlay = document.getElementById('popup-overlay');
             if (show) {
                 overlay.style.display = 'flex';
-                popupCard.style.left = '50%';
-                popupCard.style.top = '50%';
-                popupCard.style.transform = 'translate(-50%, -50%)';
+                if (!popupCard.style.left) {
+                    popupCard.style.left = '50%';
+                    popupCard.style.top = '50%';
+                    popupCard.style.transform = 'translate(-50%, -50%)';
+                }
             } else {
                 overlay.style.display = 'none';
             }
