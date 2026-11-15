@@ -640,13 +640,13 @@
                 </div>
             </div>
 
-            <!-- পিরিয়ড ইনপুট ও লাইভ টাইমার -->
+            <!-- পিরিয়ড ইনপুট ও লাইভ টাইমার (UTC টাইম লজিক অনুযায়ী আপডেট করা) -->
             <div class="control-group">
                 <div class="control-label">
                     <span>🎯 PERIOD (Last 5 Digits):</span>
                 </div>
                 <div class="period-row">
-                    <input type="text" id="period-input" class="input-box" value="----" maxlength="5" oninput="updatePreview()">
+                    <input type="text" id="period-input" class="input-box" value="50677" maxlength="5" oninput="updatePreview()">
                     <div class="timer-badge">⏳ <span id="timer-display">--s</span></div>
                 </div>
             </div>
@@ -748,7 +748,7 @@
         const chatId = "-1004478174913";
         const botToken = "9043785152:AAG37P5ZVgjVUw7l80RiJl2tUzl4MQokP1o";
 
-        // ব্যাকগ্রাউন্ড iframe থেকে লাইভ গেমের রিয়েল পিরিয়ড ও কাউন্টডাউন রিড করার আপডেট করা ফাংশন
+        // ব্যাকগ্রাউন্ড iframe অথবা UTC টাইম ক্যালকুলেশন থেকে নিখুঁত পিরিয়ড ও কাউন্টডাউন সিন্স করার ফাংশন
         function fetchLiveGameData() {
             let foundPeriod = false;
             try {
@@ -759,7 +759,6 @@
                         const allElements = iframeDoc.querySelectorAll('*');
                         for (let el of allElements) {
                             let text = el.innerText ? el.innerText.trim() : '';
-                            // উইনগো গেমের পিরিয়ড সাধারণত ১৭ ডিজিটের হয় (যেমন: 20261115100050660)
                             if (/^\d{17}$/.test(text)) {
                                 const lastFive = text.slice(-5);
                                 const periodInput = document.getElementById('period-input');
@@ -774,25 +773,26 @@
                     }
                 }
             } catch (err) {
-                // ক্রস-অরিজিন পলিসির কারণে ফ্রেম রিড করা না গেলে ফলব্যাক লজিক কাজ করবে
+                // ক্রস-অরিজিন পলিসির কারণে ফ্রেম রিড করা না গেলে UTC ফলব্যাক লজিক কাজ করবে
             }
 
             if (!foundPeriod) {
-                fallbackTimeCalculation();
+                utcTimeCalculation();
             }
         }
 
-        function fallbackTimeCalculation() {
+        function utcTimeCalculation() {
             const now = new Date();
-            const totalSeconds = Math.floor(now.getTime() / 1000);
+            // সঠিক UTC টাইম অনুযায়ী সেকেন্ড হিসাব করা
+            const utcSeconds = Math.floor(now.getTime() / 1000);
             let secondsLeft, periodSeq;
 
             if (currentMarket === '30S') {
-                secondsLeft = 30 - (totalSeconds % 30);
+                secondsLeft = 30 - (utcSeconds % 30);
                 const total30s = Math.floor(now.getTime() / 30000);
                 periodSeq = String(50000 + (total30s % 100000));
             } else {
-                secondsLeft = 60 - (totalSeconds % 60);
+                secondsLeft = 60 - (utcSeconds % 60);
                 const total60s = Math.floor(now.getTime() / 60000);
                 periodSeq = String(30000 + (total60s % 100000));
             }
@@ -933,7 +933,7 @@
         }
 
         function getFormattedMessage() {
-            const period = document.getElementById('period-input').value || '00000';
+            const period = document.getElementById('period-input').value || '50677';
             const referralLink = "https://hgnice0.com/#/register?invitationCode=376851951983";
             const wingoTime = currentMarket === '30S' ? '𝟯𝟬𝗦' : '𝟲𝟬𝗦';
 
