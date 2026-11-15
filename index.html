@@ -854,10 +854,13 @@
         });
 
         function togglePopup(show) {
+            const floatingBtn = document.getElementById('floating-btn');
             if (show) {
                 popupCard.style.display = 'flex';
+                floatingBtn.style.display = 'none'; // পপআপ ওপেন হলে আইকন হাইড হয়ে যাবে
             } else {
                 popupCard.style.display = 'none';
+                floatingBtn.style.display = 'flex'; // পপআপ ক্লোজ করলে আইকন আবার ফিরে আসবে
             }
         }
 
